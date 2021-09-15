@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 import { TabBar, ListView } from 'antd-mobile';
-
 
 function MyBody(props) {
   return (
@@ -25,7 +24,7 @@ const data = [
     name: 'Alice',
     msg: '大家好',
   },
-]
+];
 const NUM_SECTIONS = 1;
 const NUM_ROWS_PER_SECTION = 3;
 let pageIndex = 0;
@@ -35,7 +34,7 @@ let sectionIDs = [];
 let rowIDs = [];
 function genData(pIndex = 0) {
   for (let i = 0; i < NUM_SECTIONS; i++) {
-    const ii = (pIndex * NUM_SECTIONS) + i;
+    const ii = pIndex * NUM_SECTIONS + i;
     const sectionName = `Section ${ii}`;
     sectionIDs.push(sectionName);
     dataBlobs[sectionName] = sectionName;
@@ -67,7 +66,7 @@ class Demo extends React.Component {
     this.state = {
       dataSource,
       isLoading: true,
-      height: document.documentElement.clientHeight * 3 / 4,
+      height: (document.documentElement.clientHeight * 3) / 4,
     };
   }
 
@@ -81,7 +80,11 @@ class Demo extends React.Component {
     setTimeout(() => {
       genData();
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRowsAndSections(dataBlobs, sectionIDs, rowIDs),
+        dataSource: this.state.dataSource.cloneWithRowsAndSections(
+          dataBlobs,
+          sectionIDs,
+          rowIDs,
+        ),
         isLoading: false,
         height: hei,
       });
@@ -112,7 +115,7 @@ class Demo extends React.Component {
     //     isLoading: false,
     //   });
     // }, 1000);
-  }
+  };
 
   render() {
     const separator = (sectionID, rowID) => (
@@ -142,11 +145,23 @@ class Demo extends React.Component {
               borderBottom: '1px solid #F6F6F6',
             }}
           >{obj.title}</div> */}
-          <div style={{ display: '-webkit-box', display: 'flex', padding: '15px 0' }}>
+          <div
+            style={{
+              display: '-webkit-box',
+              display: 'flex',
+              padding: '15px 0',
+            }}
+          >
             {/* <img style={{ height: '64px', marginRight: '15px' }} src={obj.img} alt="" /> */}
-            <div style={{ lineHeight: 2, fontWeight: 'bold', color: '#FF6E27' }}>{obj.name}:</div>
+            <div
+              style={{ lineHeight: 2, fontWeight: 'bold', color: '#FF6E27' }}
+            >
+              {obj.name}:
+            </div>
             <div style={{ lineHeight: 2 }}>
-              <div style={{ paddingLeft: 5, fontWeight: 'bold' }}>{obj.msg}</div>
+              <div style={{ paddingLeft: 5, fontWeight: 'bold' }}>
+                {obj.msg}
+              </div>
               {/* <div><span style={{ fontSize: '30px', color: '#FF6E27' }}>35</span>¥ {rowID}</div> */}
             </div>
           </div>
@@ -156,12 +171,14 @@ class Demo extends React.Component {
 
     return (
       <ListView
-        ref={el => this.lv = el}
+        ref={(el) => (this.lv = el)}
         dataSource={this.state.dataSource}
         renderHeader={() => <span>聊天室</span>}
-        renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-          {this.state.isLoading ? 'Loading...' : 'Loaded'}
-        </div>)}
+        renderFooter={() => (
+          <div style={{ padding: 30, textAlign: 'center' }}>
+            {this.state.isLoading ? 'Loading...' : 'Loaded'}
+          </div>
+        )}
         // renderSectionHeader={sectionData => (
         //   <div>{`Task ${sectionData.split(' ')[1]}`}</div>
         // )}
@@ -173,7 +190,9 @@ class Demo extends React.Component {
           overflow: 'auto',
         }}
         pageSize={4}
-        onScroll={() => { console.log('scroll'); }}
+        onScroll={() => {
+          console.log('scroll');
+        }}
         scrollRenderAheadDistance={500}
         onEndReached={this.onEndReached}
         onEndReachedThreshold={10}
@@ -184,32 +203,42 @@ class Demo extends React.Component {
 
 class Friend extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      f: [{
-        name: 'Jack',
-      },
-      {
-        name: 'Tom',
-      },
-      {
-        name: 'Alice',
-      }],
+      f: [
+        {
+          name: 'Jack',
+        },
+        {
+          name: 'Tom',
+        },
+        {
+          name: 'Alice',
+        },
+      ],
       a: 1,
-    }
+    };
   }
 
   render() {
     return (
       <>
-        <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
+        <div
+          style={{
+            backgroundColor: 'white',
+            height: '100%',
+            textAlign: 'center',
+          }}
+        >
           {/* <div>{this.state.f[0].name}</div> */}
           {this.state.f.map((o, k) => (
-            <div key={k} style={{ paddingTop: 60 }}>{o.name}</div>
+            <div key={k} style={{ paddingTop: 60 }}>
+              {o.name}
+            </div>
           ))}
         </div>
       </>
-    )
+    );
   }
 }
 
@@ -234,7 +263,13 @@ class TabBarExample extends React.Component {
   render() {
     return (
       <>
-        <div style={this.state.fullScreen ? { position: 'fixed', height: '100%', width: '100%', top: 0 } : { height: 400 }}>
+        <div
+          style={
+            this.state.fullScreen
+              ? { position: 'fixed', height: '100%', width: '100%', top: 0 }
+              : { height: 400 }
+          }
+        >
           <TabBar
             unselectedTintColor="#949494"
             tintColor="#33A3F4"
@@ -243,19 +278,23 @@ class TabBarExample extends React.Component {
           >
             <TabBar.Item
               icon={
-                <div style={{
-                  width: '22px',
-                  height: '22px',
-                  background: 'url(https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg) center center /  21px 21px no-repeat'
-                }}
+                <div
+                  style={{
+                    width: '22px',
+                    height: '22px',
+                    background:
+                      'url(https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg) center center /  21px 21px no-repeat',
+                  }}
                 />
               }
               selectedIcon={
-                <div style={{
-                  width: '22px',
-                  height: '22px',
-                  background: 'url(https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg) center center /  21px 21px no-repeat'
-                }}
+                <div
+                  style={{
+                    width: '22px',
+                    height: '22px',
+                    background:
+                      'url(https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg) center center /  21px 21px no-repeat',
+                  }}
                 />
               }
               title="Chat"
@@ -273,19 +312,23 @@ class TabBarExample extends React.Component {
             </TabBar.Item>
             <TabBar.Item
               icon={
-                <div style={{
-                  width: '22px',
-                  height: '22px',
-                  background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
-                }}
+                <div
+                  style={{
+                    width: '22px',
+                    height: '22px',
+                    background:
+                      'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat',
+                  }}
                 />
               }
               selectedIcon={
-                <div style={{
-                  width: '22px',
-                  height: '22px',
-                  background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
-                }}
+                <div
+                  style={{
+                    width: '22px',
+                    height: '22px',
+                    background:
+                      'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat',
+                  }}
                 />
               }
               title="Friend"
@@ -300,13 +343,11 @@ class TabBarExample extends React.Component {
             >
               <Friend />
             </TabBar.Item>
-
           </TabBar>
         </div>
       </>
-
-    )
+    );
   }
 }
 
-export default TabBarExample
+export default TabBarExample;

@@ -1,8 +1,13 @@
-export default {
-    base: '/docs/',
-    publicPath: '/static/',
-    hash: true,
-    history: {
-        type: 'hash',
-    },
-}
+import { defineConfig } from 'umi';
+
+export default defineConfig({
+  nodeModulesTransform: {
+    type: 'none',
+  },
+  routes: [
+    { path: '/', component: '@/pages/Index' },
+    { path: '/login', component: '@/pages/Login' },
+  ],
+  fastRefresh: {},
+  mfsu: {},
+});
