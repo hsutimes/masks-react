@@ -1,9 +1,20 @@
+import React, { useState, useEffect } from 'react';
 import { Button, List, InputItem, WhiteSpace, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import { history } from 'umi';
+import Cookies from 'js-cookie';
+import { randomColor } from '@/utils/util.js';
 
 const Page = (props) => {
   const { getFieldProps, getFieldError } = props.form;
+
+  useEffect(() => {
+    let a = Cookies.get('account');
+    if (a) {
+      // console.log(a);
+      props.form.setFieldsValue({ account: a });
+    }
+  }, []);
 
   const onSubmit = () => {
     props.form.validateFields({ force: true }, (error) => {
@@ -11,6 +22,8 @@ const Page = (props) => {
         // console.log(props.form.getFieldsValue());
         let obj = props.form.getFieldsValue();
         console.log(obj.account);
+        Cookies.set('account', obj.account);
+        Cookies.set('avatar_color', JSON.stringify(randomColor()));
         history.push('/');
       } else {
         Toast.fail('Validation failed');

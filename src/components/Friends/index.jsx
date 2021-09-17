@@ -8,12 +8,15 @@ class Friends extends React.Component {
       f: [
         {
           name: 'Jack',
+          avatar_color: { background: 'rgb(123,176,71)' },
         },
         {
           name: 'Tom',
+          avatar_color: { background: 'rgb(12,16,71)' },
         },
         {
           name: 'Alice',
+          avatar_color: { background: 'rgb(23,76,1)' },
         },
       ],
       a: 1,
@@ -33,7 +36,9 @@ class Friends extends React.Component {
           {/* <div>{this.state.f[0].name}</div> */}
           {this.state.f.map((o, k) => (
             <div key={k} style={{ paddingTop: 10 }}>
-              <Avatar>{o.name}</Avatar>
+              <Avatar style={o.avatar_color}>
+                {o.name.charAt(0).toUpperCase()}
+              </Avatar>
             </div>
           ))}
         </div>

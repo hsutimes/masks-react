@@ -2,8 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { TabBar, ListView } from 'antd-mobile';
 
-import Chat from '@/components/Chat';
+import Home from '@/components/Home';
 import Friends from '@/components/Friends';
+
+import { history } from 'umi';
+import Cookies from 'js-cookie';
 
 class TabBarExample extends React.Component {
   constructor(props) {
@@ -12,7 +15,27 @@ class TabBarExample extends React.Component {
       selectedTab: 'redTab',
       hidden: false,
       fullScreen: true,
+      user: {
+        name: '',
+        avatar_color: '',
+      },
     };
+  }
+
+  componentDidMount() {
+    let a = Cookies.get('account');
+    let c = Cookies.get('avatar_color');
+    if (!a || !c) {
+      history.push('/login');
+    } else {
+      console.log(a);
+      this.setState({
+        user: {
+          name: a,
+          avatar_color: JSON.parse(c),
+        },
+      });
+    }
   }
 
   // renderContent(pageText) {
@@ -60,9 +83,9 @@ class TabBarExample extends React.Component {
                   }}
                 />
               }
-              title="Chat"
-              key="Chat"
-              badge={2}
+              title="Home"
+              key="Home"
+              // badge={2}
               selected={this.state.selectedTab === 'redTab'}
               onPress={() => {
                 this.setState({
@@ -71,7 +94,7 @@ class TabBarExample extends React.Component {
               }}
               data-seed="logId1"
             >
-              <Chat />
+              <Home user={this.state.user} />
             </TabBar.Item>
             <TabBar.Item
               icon={
