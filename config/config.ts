@@ -11,6 +11,7 @@ export default defineConfig({
     { exact: true, path: '/', component: '@/pages/Index' },
     { exact: true, path: '/login', component: '@/pages/Login' },
     { exact: true, path: '/chat', component: '@/components/Chat' },
+    { component: '@/pages/404' },
   ],
   // fastRefresh: {},
   mfsu: {},
