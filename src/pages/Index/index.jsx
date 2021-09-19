@@ -28,7 +28,7 @@ class TabBarExample extends React.Component {
     if (!a || !c) {
       history.push('/login');
     } else {
-      console.log(a);
+      // console.log(a);
       this.setState({
         user: {
           name: a,
