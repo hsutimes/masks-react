@@ -38,14 +38,6 @@ class TabBarExample extends React.Component {
     }
   }
 
-  // renderContent(pageText) {
-  //   return (
-  //     <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
-  //       <div style={{ paddingTop: 60 }}>Clicked “{pageText}” tab， show “{pageText}” information</div>
-  //     </div>
-  //   );
-  // }
-
   render() {
     return (
       <>

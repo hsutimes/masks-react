@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, Button } from 'antd';
-import { history } from 'umi';
+import { history, useModel } from 'umi';
 
 const index = (props) => {
-  const user = props.user;
-  useEffect(() => {}, []);
+  const { conn, init, onMessage } = useModel('useWSModel', (model) => ({
+    conn: model.conn,
+    init: model.init,
+    onMessage: model.onMessage,
+  }));
+  const [user, setUser] = useState(props.user);
+  useEffect(() => {
+    if (props.user !== user) {
+      setUser(props.user);
+      initWs(props.user.name);
+    }
+  }, [props.user]);
+
+  const initWs = (name) => {
+    init(name, (b) => {
+      if (b) {
+        console.log(window.ws);
+        onMessage((event) => {
+          console.log(event.data);
+        });
+      }
+    });
+  };
 
   const enter = () => {
     history.push('/chat');
