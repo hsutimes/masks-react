@@ -52,7 +52,13 @@ class TabBarExample extends React.Component {
         <div
           style={
             this.state.fullScreen
-              ? { position: 'fixed', height: '100%', width: '100%', top: 0 }
+              ? {
+                  position: 'fixed',
+                  height: '100%',
+                  width: '100%',
+                  top: 0,
+                  maxWidth: 768,
+                }
               : { height: 400 }
           }
         >
