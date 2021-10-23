@@ -3,29 +3,21 @@ import { Avatar, Button } from 'antd';
 import { history, useModel } from 'umi';
 
 const index = (props) => {
-  const { conn, init, onMessage } = useModel('useWSModel', (model) => ({
+  const { conn, nums, message } = useModel('useWSModel', (model) => ({
     conn: model.conn,
-    init: model.init,
-    onMessage: model.onMessage,
+    nums: model.nums,
+    message: model.message,
   }));
   const [user, setUser] = useState(props.user);
   useEffect(() => {
     if (props.user !== user) {
       setUser(props.user);
-      initWs(props.user.name);
     }
   }, [props.user]);
 
-  const initWs = (name) => {
-    init(name, (b) => {
-      if (b) {
-        console.log(window.ws);
-        onMessage((event) => {
-          console.log(event.data);
-        });
-      }
-    });
-  };
+  useEffect(() => {
+    // console.log('onmessage');
+  }, []);
 
   const enter = () => {
     history.push('/chat');
@@ -44,6 +36,7 @@ const index = (props) => {
         <Avatar size="large" style={user.avatar_color}>
           {user.name.charAt(0).toUpperCase()}
         </Avatar>
+        <div>在线人数：{nums}</div>
         <div
           style={{
             padding: 30,

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { TabBar, ListView } from 'antd-mobile';
+import { message } from 'antd';
 
 import Home from '@/components/Home';
 import Friends from '@/components/Friends';
@@ -8,6 +9,7 @@ import Friends from '@/components/Friends';
 import { history } from 'umi';
 import Cookies from 'js-cookie';
 
+@window.connectModel('api', 'useWSModel')
 class TabBarExample extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,7 @@ class TabBarExample extends React.Component {
         name: '',
         avatar_color: '',
       },
+      api: this.props.api,
     };
   }
 
@@ -29,12 +32,31 @@ class TabBarExample extends React.Component {
       history.push('/login');
     } else {
       // console.log(a);
-      this.setState({
-        user: {
-          name: a,
-          avatar_color: JSON.parse(c),
+      this.setState(
+        {
+          user: {
+            name: a,
+            avatar_color: JSON.parse(c),
+          },
         },
-      });
+        () => {
+          const { user, api } = this.state;
+          // console.log(user);
+          if (!api.conn)
+            api.init(user.name, (b, msg) => {
+              if (b) {
+                console.log(msg);
+                // 监听全局消息
+                api.onMessage((msg) => {
+                  console.log(msg);
+                  if (history.location.pathname === '/') {
+                    message.info(msg);
+                  }
+                });
+              }
+            });
+        },
+      );
     }
   }
 
