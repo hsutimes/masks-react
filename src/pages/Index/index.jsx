@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { TabBar, ListView } from 'antd-mobile';
+import { message } from 'antd';
 
 import Home from '@/components/Home';
 import Friends from '@/components/Friends';
@@ -8,6 +9,7 @@ import Friends from '@/components/Friends';
 import { history } from 'umi';
 import Cookies from 'js-cookie';
 
+@window.connectModel('api', 'useWSModel')
 class TabBarExample extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,7 @@ class TabBarExample extends React.Component {
         name: '',
         avatar_color: '',
       },
+      api: this.props.api,
     };
   }
 
@@ -28,23 +31,34 @@ class TabBarExample extends React.Component {
     if (!a || !c) {
       history.push('/login');
     } else {
-      console.log(a);
-      this.setState({
-        user: {
-          name: a,
-          avatar_color: JSON.parse(c),
+      // console.log(a);
+      this.setState(
+        {
+          user: {
+            name: a,
+            avatar_color: JSON.parse(c),
+          },
         },
-      });
+        () => {
+          const { user, api } = this.state;
+          // console.log(user);
+          if (!api.conn)
+            api.init(user.name, (b, msg) => {
+              if (b) {
+                console.log(msg);
+                // 监听全局消息
+                api.onMessage((msg) => {
+                  console.log(msg);
+                  if (history.location.pathname === '/') {
+                    message.info(msg);
+                  }
+                });
+              }
+            });
+        },
+      );
     }
   }
-
-  // renderContent(pageText) {
-  //   return (
-  //     <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
-  //       <div style={{ paddingTop: 60 }}>Clicked “{pageText}” tab， show “{pageText}” information</div>
-  //     </div>
-  //   );
-  // }
 
   render() {
     return (
@@ -52,7 +66,13 @@ class TabBarExample extends React.Component {
         <div
           style={
             this.state.fullScreen
-              ? { position: 'fixed', height: '100%', width: '100%', top: 0 }
+              ? {
+                  position: 'fixed',
+                  height: '100%',
+                  width: '100%',
+                  top: 0,
+                  maxWidth: 768,
+                }
               : { height: 400 }
           }
         >

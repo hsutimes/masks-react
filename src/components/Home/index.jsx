@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, Button } from 'antd';
-import { history } from 'umi';
+import { history, useModel } from 'umi';
 
 const index = (props) => {
-  const user = props.user;
-  useEffect(() => {}, []);
+  const { conn, nums, message } = useModel('useWSModel', (model) => ({
+    conn: model.conn,
+    nums: model.nums,
+    message: model.message,
+  }));
+  const [user, setUser] = useState(props.user);
+  useEffect(() => {
+    if (props.user !== user) {
+      setUser(props.user);
+    }
+  }, [props.user]);
+
+  useEffect(() => {
+    // console.log('onmessage');
+  }, []);
 
   const enter = () => {
     history.push('/chat');
@@ -23,6 +36,7 @@ const index = (props) => {
         <Avatar size="large" style={user.avatar_color}>
           {user.name.charAt(0).toUpperCase()}
         </Avatar>
+        <div>在线人数：{nums}</div>
         <div
           style={{
             padding: 30,

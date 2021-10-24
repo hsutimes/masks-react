@@ -9,7 +9,9 @@ const Message = (props) => {
   const msg = props.msg;
 
   useEffect(() => {
-    if (msg && msg.length != 0) console.log(msg);
+    if (msg && msg.length != 0) {
+      // console.log(msg);
+    }
   }, [msg]);
 
   const user = (obj) => {

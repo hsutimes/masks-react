@@ -5,6 +5,8 @@ import { history } from 'umi';
 import Cookies from 'js-cookie';
 import { randomColor } from '@/utils/util.js';
 
+import styles from './index.less';
+
 const Page = (props) => {
   const { getFieldProps, getFieldError } = props.form;
 
@@ -40,9 +42,9 @@ const Page = (props) => {
 
   return (
     <>
-      <form>
+      <form className={styles.form}>
         <List>
-          <div style={{ paddingTop: '70%', paddingLeft: 10, paddingRight: 10 }}>
+          <div style={{ padding: 10 }}>
             <InputItem
               {...getFieldProps('account', {
                 // initialValue: 'little ant',
