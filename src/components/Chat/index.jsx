@@ -83,7 +83,7 @@ const Chat = () => {
 
   return (
     <>
-      <NavBar onBack={back}>Enjoying Time</NavBar>
+      <NavBar onBack={back}>Enjoying Time ({nums})</NavBar>
       <div className={styles.message}>
         <Message msg={data} />
       </div>
