@@ -1,4 +1,4 @@
-# umi project
+# masks-react
 
 ## Getting Started
 

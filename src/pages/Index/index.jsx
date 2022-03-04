@@ -9,7 +9,7 @@ import Friends from '@/components/Friends';
 import { history } from 'umi';
 import Cookies from 'js-cookie';
 
-@window.connectModel('api', 'useWSModel')
+@window.connectModel('api', 'useWebSocketModel')
 class TabBarExample extends React.Component {
   constructor(props) {
     super(props);
@@ -42,19 +42,15 @@ class TabBarExample extends React.Component {
         () => {
           const { user, api } = this.state;
           // console.log(user);
-          if (!api.conn)
-            api.init(user.name, (b, msg) => {
-              if (b) {
-                console.log(msg);
-                // 监听全局消息
-                api.onMessage((msg) => {
-                  console.log(msg);
-                  if (history.location.pathname === '/') {
-                    message.info(msg);
-                  }
-                });
-              }
-            });
+          api.init(user.name);
+
+          // 监听全局消息
+          // api.onMessage((msg) => {
+          //   console.log(msg);
+          //   if (history.location.pathname === '/') {
+          //     message.info(msg);
+          //   }
+          // });
         },
       );
     }

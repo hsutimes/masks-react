@@ -10,12 +10,7 @@ import { randomColor, randomChar } from '@/utils/util.js';
 import styles from './index.less';
 
 const Chat = () => {
-  const { conn, nums, message, onSend } = useModel('useWSModel', (model) => ({
-    conn: model.conn,
-    nums: model.nums,
-    message: model.message,
-    onSend: model.onSend,
-  }));
+  const { conn, nums, message, sendMsg } = useModel('useWebSocketModel');
   const [data, setData] = useState([]);
   const [value, setValue] = useState('');
   const scroll = Scroll.animateScroll;
@@ -62,7 +57,7 @@ const Chat = () => {
       return;
     }
     // console.log(value);
-    onSend(value);
+    sendMsg(value);
     setValue('');
   };
 
