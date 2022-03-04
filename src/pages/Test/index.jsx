@@ -1,4 +1,6 @@
 import React, { useState, useRef, useLayoutEffect, useCallback } from 'react';
+import conf from '@/utils/conf';
+
 // import Header from './components/header';
 // import './App.less';
 
@@ -23,7 +25,7 @@ const Test = () => {
       '连接已关闭或者没有链接成功',
     ];
     if (!ws.current || ws.current.readyState === 3) {
-      ws.current = new WebSocket('ws://192.168.31.129:8081');
+      ws.current = new WebSocket(conf.host);
       ws.current.onopen = (_e) =>
         setReadyState(stateArr[ws.current?.readyState ?? 0]);
       ws.current.onclose = (_e) =>

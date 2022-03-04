@@ -72,7 +72,7 @@ const Page = (props) => {
             </InputItem>
             <WhiteSpace />
             <Button type="primary" onClick={onSubmit}>
-              进入西方极乐世界
+              进入平行宇宙
             </Button>
             <WhiteSpace />
           </div>
