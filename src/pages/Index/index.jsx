@@ -42,7 +42,9 @@ class TabBarExample extends React.Component {
         () => {
           const { user, api } = this.state;
           // console.log(user);
-          api.init(user.name);
+          if (!api.conn) {
+            api.init(user.name);
+          }
 
           // 监听全局消息
           // api.onMessage((msg) => {
