@@ -26,7 +26,7 @@ const Message = (props) => {
           {msg.map((i, k) => (
             <li key={k} className={i.isMe ? styles.me : styles.other}>
               <Avatar style={i.avatar_color}>{user(i)}</Avatar>
-              <div style={{ margin: '0 56px' }}>{i.user}</div>
+              <div style={{ margin: '7px 56px 0px' }}>{i.user}</div>
               <p className={styles.message}>{i.data}</p>
             </li>
           ))}
