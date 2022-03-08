@@ -3,11 +3,7 @@ import { Avatar, Button } from 'antd';
 import { history, useModel } from 'umi';
 
 const Friends = (props) => {
-  const { conn, nums, peoples } = useModel('useWebSocketModel', (model) => ({
-    conn: model.conn,
-    nums: model.nums,
-    peoples: model.peoples,
-  }));
+  const { conn, nums, peoples } = useModel('useWebSocketModel');
 
   return (
     <>
@@ -18,13 +14,20 @@ const Friends = (props) => {
           textAlign: 'center',
         }}
       >
-        {peoples.map((o, k) => (
-          <div key={k} style={{ paddingTop: 10 }}>
-            <Avatar style={{ background: '#1890ff' }}>
-              {o.charAt(0).toUpperCase()}
-            </Avatar>
-          </div>
-        ))}
+        <div style={{ padding: 10 }}>
+          <Avatar.Group>
+            {peoples.map((o, k) => (
+              <Avatar
+                key={k}
+                style={{ background: '#1890ff' }}
+                shape={'circle'}
+                size={'large'}
+              >
+                {o.charAt(0).toUpperCase()}
+              </Avatar>
+            ))}
+          </Avatar.Group>
+        </div>
       </div>
     </>
   );
