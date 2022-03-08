@@ -32,6 +32,7 @@ const Chat = () => {
         obj = {};
         let msg = message[i].split(': ');
         if (msg[0] === 'entered' || msg[0] === 'left') {
+          continue;
           let t = msg[0] === 'entered' ? '欢迎' + msg[1] : msg[1] + '下线';
           obj.data = t;
           obj.isMe = false;
@@ -39,7 +40,6 @@ const Chat = () => {
           obj.root = true;
           obj.avatar_color = { background: '#ff8f1f' };
           arr.push(obj);
-          continue;
         }
         obj.data = msg[1];
         obj.isMe = msg[0] === a ? true : false;
