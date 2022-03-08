@@ -49,7 +49,9 @@ const Chat = () => {
         arr.push(obj);
       }
       setData(arr);
-      scrollToBottom();
+      setTimeout(() => {
+        scrollToBottom();
+      }, 100);
     }
   }, [message]);
 
