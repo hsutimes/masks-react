@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, Button } from 'antd';
 import { history, useModel } from 'umi';
+import { useUpdateEffect } from 'ahooks';
 
 const index = (props) => {
-  const { conn, nums, message } = useModel('useWSModel', (model) => ({
-    conn: model.conn,
-    nums: model.nums,
-    message: model.message,
-  }));
+  const { conn, nums, message } = useModel('useWebSocketModel');
   const [user, setUser] = useState(props.user);
   useEffect(() => {
     if (props.user !== user) {
@@ -18,6 +15,10 @@ const index = (props) => {
   useEffect(() => {
     // console.log('onmessage');
   }, []);
+
+  useUpdateEffect(() => {
+    console.log(nums);
+  }, [nums]);
 
   const enter = () => {
     history.push('/chat');

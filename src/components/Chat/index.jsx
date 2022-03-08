@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { NavBar, Input, List, Button } from 'antd-mobile-v5';
 import { history, useModel } from 'umi';
 import Cookies from 'js-cookie';
-import * as Scroll from 'react-scroll';
+import { useKeyPress } from 'ahooks';
 
 import Message from '@/components/Message';
-import { randomColor, randomChar } from '@/utils/util.js';
+import { scrollToY } from '@/utils/sliding-scroll';
 import styles from './index.less';
 
 const Chat = () => {
-  const { conn, nums, message, onSend } = useModel('useWSModel', (model) => ({
-    conn: model.conn,
-    nums: model.nums,
-    message: model.message,
-    onSend: model.onSend,
-  }));
+  const { conn, nums, message, sendMsg } = useModel('useWebSocketModel');
   const [data, setData] = useState([]);
   const [value, setValue] = useState('');
-  const scroll = Scroll.animateScroll;
+
+  // 监听回车事件
+  useKeyPress('enter', (event) => {
+    send();
+  });
 
   useEffect(() => {
     let a = Cookies.get('account');
@@ -48,12 +47,9 @@ const Chat = () => {
         obj.root = false;
         obj.avatar_color = obj.isMe ? JSON.parse(c) : { background: '#00b578' };
         arr.push(obj);
-        if (message.length > 7)
-          setTimeout(() => {
-            scrollToBottom();
-          }, 500);
       }
       setData(arr);
+      scrollToBottom();
     }
   }, [message]);
 
@@ -62,7 +58,7 @@ const Chat = () => {
       return;
     }
     // console.log(value);
-    onSend(value);
+    sendMsg(value);
     setValue('');
   };
 
@@ -77,42 +73,49 @@ const Chat = () => {
     history.goBack();
   };
 
+  // 滚动到底部
   const scrollToBottom = () => {
-    scroll.scrollToBottom();
+    // console.log('滚动到底部');
+    let ele = document.getElementById('scroll');
+    scrollToY(ele.scrollHeight, 500, ele);
   };
 
   return (
     <>
-      <NavBar onBack={back}>Enjoying Time ({nums})</NavBar>
-      <div className={styles.message}>
-        <Message msg={data} />
-      </div>
-      <div className={styles.footer}>
-        <List
-          style={{
-            '--prefix-width': '6em',
-          }}
-        >
-          <List.Item
-            prefix=""
-            extra={
-              <Button color="primary" fill="solid" onClick={send}>
-                发送
-              </Button>
-            }
+      <div className={styles.body}>
+        <NavBar onBack={back}>Enjoying Time ({nums})</NavBar>
+        <div id="scroll" className={styles.message}>
+          {/* <ScrollToBottom mode="bottom"> */}
+          <Message msg={data} />
+          {/* </ScrollToBottom> */}
+        </div>
+        <div className={styles.footer}>
+          <List
+            style={{
+              '--prefix-width': '6em',
+            }}
           >
-            <Input
-              id="msg_input"
-              placeholder="请输入内容"
-              clearable
-              value={value}
-              onChange={(val) => {
-                setValue(val);
-              }}
-              onKeyPress={handleKeyPress}
-            />
-          </List.Item>
-        </List>
+            <List.Item
+              prefix=""
+              extra={
+                <Button color="primary" fill="solid" onClick={send}>
+                  发送
+                </Button>
+              }
+            >
+              <Input
+                id="msg_input"
+                placeholder="请输入内容"
+                clearable
+                value={value}
+                onChange={(val) => {
+                  setValue(val);
+                }}
+                onKeyPress={handleKeyPress}
+              />
+            </List.Item>
+          </List>
+        </div>
       </div>
     </>
   );
