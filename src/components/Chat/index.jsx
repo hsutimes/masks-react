@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
 import { NavBar, Input, List, Button } from 'antd-mobile-v5';
 import { history, useModel } from 'umi';
 import Cookies from 'js-cookie';
 import { useKeyPress } from 'ahooks';
 
-import Message from '@/components/Message';
-import { scrollToY } from '@/utils/sliding-scroll';
+import Message from '@/components/MessageVirtualized';
 import styles from './index.less';
 
 const Chat = () => {
@@ -28,9 +26,15 @@ const Chat = () => {
       let arr = [];
       var obj = {};
       // console.log(message);
-      for (let i = 0; i < message.length; i++) {
+      //
+      let msgArr = [...message];
+      // 截取最近100条消息
+      // if (msgArr.length > 100) {
+      //   msgArr = msgArr.splice(msgArr.length - 100, msgArr.length);
+      // }
+      for (let i = 0; i < msgArr.length; i++) {
         obj = {};
-        let msg = message[i].split(': ');
+        let msg = msgArr[i].split(': ');
         if (msg[0] === 'entered' || msg[0] === 'left') {
           continue;
           let t = msg[0] === 'entered' ? '欢迎' + msg[1] : msg[1] + '下线';
@@ -49,9 +53,6 @@ const Chat = () => {
         arr.push(obj);
       }
       setData(arr);
-      setTimeout(() => {
-        scrollToBottom();
-      }, 100);
     }
   }, [message]);
 
@@ -75,21 +76,12 @@ const Chat = () => {
     history.goBack();
   };
 
-  // 滚动到底部
-  const scrollToBottom = () => {
-    // console.log('滚动到底部');
-    let ele = document.getElementById('scroll');
-    scrollToY(ele.scrollHeight, 500, ele);
-  };
-
   return (
     <>
       <div className={styles.body}>
         <NavBar onBack={back}>Enjoying Time ({nums})</NavBar>
-        <div id="scroll" className={styles.message}>
-          {/* <ScrollToBottom mode="bottom"> */}
+        <div className={styles.message}>
           <Message msg={data} />
-          {/* </ScrollToBottom> */}
         </div>
         <div className={styles.footer}>
           <List
