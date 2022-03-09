@@ -1,0 +1,81 @@
+.chat {
+  cursor: pointer;
+  padding: 0 10px;
+  background: aliceblue;
+  height: 90%;
+  ul {
+    height: 100%;
+    width: 100%;
+    list-style-type: none;
+    // display: contents;
+    li {
+      // padding: 2px 40px;
+      span {
+        border-radius: 50%;
+        width: 46px;
+        height: 46px;
+        font-size: 25px;
+        // line-height: 46px;
+      }
+      p.message {
+        min-height: 25px;
+        // line-height: 30px;
+        max-width: 56%;
+        display: inline-block;
+        border-radius: 15px;
+        padding: 6px 10px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        text-align: left;
+        word-break: break-all;
+      }
+      p.name {
+        color: #666;
+        font-size: 14px;
+        position: relative;
+      }
+    }
+    li.time {
+      height: 40px;
+      line-height: 40px;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+    }
+    li.me {
+      text-align: right;
+      overflow: hidden;
+      span {
+        float: right;
+        margin-top: 7px;
+      }
+      p.message {
+        margin-right: 10px;
+        background: #1e90ff;
+        color: #fff;
+        border-top-right-radius: 3px;
+      }
+      p.name {
+        right: 14px;
+      }
+    }
+    li.other {
+      text-align: left;
+      overflow: hidden;
+      // margin-left: -40px;
+      span {
+        float: left;
+        margin-top: 7px;
+      }
+      p.message {
+        margin-left: 10px;
+        background: #fff;
+        color: #000;
+        border-top-left-radius: 3px;
+      }
+      p.name {
+        left: 14px;
+      }
+    }
+  }
+}
