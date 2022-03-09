@@ -28,10 +28,10 @@ const Chat = () => {
       // console.log(message);
       //
       let msgArr = [...message];
-      // 截取最近100条消息
-      // if (msgArr.length > 100) {
-      //   msgArr = msgArr.splice(msgArr.length - 100, msgArr.length);
-      // }
+      // 截取最近1000条消息
+      if (msgArr.length > 1000) {
+        msgArr = msgArr.splice(msgArr.length - 1000, msgArr.length);
+      }
       for (let i = 0; i < msgArr.length; i++) {
         obj = {};
         let msg = msgArr[i].split(': ');

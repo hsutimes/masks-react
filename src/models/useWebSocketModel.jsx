@@ -94,6 +94,8 @@ export default function useWebSocketModel() {
       let l = msg.split(': ')[1];
       l = l.split(',');
       setPeoples(l);
+    } else if (msg.includes('entered') || msg.includes('left')) {
+      // donothing
     } else {
       message.push(msg);
       setMessage([...message]);
