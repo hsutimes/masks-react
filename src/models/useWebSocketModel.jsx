@@ -46,7 +46,7 @@ export default function useWebSocketModel() {
     reconnectLimit: 10, // 重试次数
     reconnectInterval: 3000, // 重试时间间隔（ms）
     onOpen: (e, ws) => {
-      console.log('连接成功');
+      // console.log('连接成功');
       // console.log(webSocketIns);
       // 首次发送，注册用户名
       setConn(webSocketIns);

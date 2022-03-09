@@ -17,7 +17,7 @@ const index = (props) => {
   }, []);
 
   useUpdateEffect(() => {
-    console.log(nums);
+    // console.log(nums);
   }, [nums]);
 
   const enter = () => {
