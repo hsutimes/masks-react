@@ -14,8 +14,8 @@ const Friends = (props) => {
           textAlign: 'center',
         }}
       >
-        <div style={{ padding: 10 }}>
-          <Avatar.Group>
+        <Avatar.Group>
+          <div style={{ padding: 10 }}>
             {peoples.map((o, k) => (
               <Avatar
                 key={k}
@@ -26,8 +26,8 @@ const Friends = (props) => {
                 {o.charAt(0).toUpperCase()}
               </Avatar>
             ))}
-          </Avatar.Group>
-        </div>
+          </div>
+        </Avatar.Group>
       </div>
     </>
   );
