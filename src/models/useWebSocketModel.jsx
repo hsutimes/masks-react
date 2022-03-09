@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useWebSocket, useReactive, useUpdateEffect } from 'ahooks';
+import { message as Msg } from 'antd';
+import { history } from 'umi';
 
 import conf from '@/utils/conf';
 
@@ -99,8 +101,11 @@ export default function useWebSocketModel() {
     } else {
       message.push(msg);
       setMessage([...message]);
-      // cb(msg);
       // console.log(msg);
+      // 全局通知新消息
+      if (history.location.pathname === '/') {
+        Msg.info(msg);
+      }
     }
   };
 
@@ -111,6 +116,7 @@ export default function useWebSocketModel() {
     nums,
     peoples,
     message,
+    latestMessage,
     init,
     disConnect,
     sendMsg,
