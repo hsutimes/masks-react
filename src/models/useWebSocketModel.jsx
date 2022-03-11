@@ -86,15 +86,24 @@ export default function useWebSocketModel() {
   }, [host]);
 
   useUpdateEffect(() => {
-    setHistoryMsg(message);
+    let t = [...message];
+    if (t.length >= 100) {
+      // 最多只保留100条消息
+      t = t.slice(t.length - 100, t.length);
+    }
+    setHistoryMsg(t);
   }, [message]);
 
   // 初始化连接
   const init = useCallback((name) => {
+    var supportsVibrate = 'vibrate' in navigator;
+    notification.info({ message: 'vibrate: ' + supportsVibrate, duration: 3 });
     if (name) {
       setNickname(name);
       setHost(conf.host + '/chat?token=key&&name=' + name);
-      setMessage(historyMsg);
+      if (historyMsg) {
+        setMessage(historyMsg);
+      }
     }
   }, []);
 
@@ -145,7 +154,8 @@ export default function useWebSocketModel() {
       // console.log(msg);
       // 全局通知新消息
       if (history.location.pathname === '/') {
-        notification.info({ message: msg });
+        // navigator.vibrate(200);
+        notification.info({ message: msg, duration: 3 });
         // notify.notifyMsg(msg);
       }
     }

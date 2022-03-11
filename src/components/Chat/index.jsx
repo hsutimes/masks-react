@@ -4,7 +4,7 @@ import { history, useModel } from 'umi';
 import Cookies from 'js-cookie';
 import { useKeyPress } from 'ahooks';
 
-import Message from '@/components/MessageVirtualized';
+import Message from '@/components/Message';
 import styles from './index.less';
 
 const Chat = () => {
@@ -25,16 +25,9 @@ const Chat = () => {
     } else {
       let arr = [];
       var obj = {};
-      // console.log(message);
-      //
-      let msgArr = [...message];
-      // 截取最近1000条消息
-      if (msgArr.length > 1000) {
-        msgArr = msgArr.splice(msgArr.length - 1000, msgArr.length);
-      }
-      for (let i = 0; i < msgArr.length; i++) {
+      for (let i = 0; i < message.length; i++) {
         obj = {};
-        let msg = msgArr[i].split(': ');
+        let msg = message[i].split(': ');
         if (msg[0] === 'entered' || msg[0] === 'left') {
           continue;
           let t = msg[0] === 'entered' ? '欢迎' + msg[1] : msg[1] + '下线';

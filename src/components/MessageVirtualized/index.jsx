@@ -20,7 +20,7 @@ const MessageVirtualized = (props) => {
       // 滚动到最底部
       setScrollToIndex(msg.length - 1);
       // 初始化节点高度
-      let t = msg.map((_, index) => ({
+      let t = msg.map((v, index) => ({
         index,
         height: estimatedItemSize,
       }));
@@ -44,17 +44,17 @@ const MessageVirtualized = (props) => {
       let nodes = ele.childNodes;
       nodes.forEach((node, k) => {
         let rect = node.getBoundingClientRect();
-        let height = rect.height;
+        let height = parseInt(rect.height);
         let index = parseInt(node.id);
         let oldHeight = t[index].height;
-        let dValue = oldHeight - height;
+        let dValue = height - oldHeight;
         // 存在差值
         if (dValue) {
           t[index].height = height;
+          console.log(index + ' | ' + oldHeight + ' | ' + height);
           // 更新节点高度与滚动面板高度
           node.style.setProperty('min-height', height + 'px', 'important');
-          let h =
-            ele.getBoundingClientRect().height + height - estimatedItemSize;
+          let h = ele.getBoundingClientRect().height + dValue;
           ele.style.setProperty('height', h + 'px', 'important');
           ele.style.setProperty('max-height', h + 'px', 'important');
         }
@@ -62,7 +62,6 @@ const MessageVirtualized = (props) => {
       // console.log(t);
       // 更新缓存
       setPositions(t);
-      // if (!scrollToIndex) toBottom(time);
     }
   }, [msg]);
 
@@ -117,6 +116,11 @@ const MessageVirtualized = (props) => {
     return h;
   };
 
+  const onScrollList = (e) => {
+    return;
+    // console.log(e);
+  };
+
   return (
     <>
       <div className={styles.chat}>
@@ -131,6 +135,7 @@ const MessageVirtualized = (props) => {
                 rowHeight={getRowHeight}
                 rowRenderer={rowRenderer}
                 scrollToIndex={scrollToIndex}
+                onScroll={onScrollList}
               />
             )}
           </AutoSizer>

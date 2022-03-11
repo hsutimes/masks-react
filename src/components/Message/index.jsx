@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, Button } from 'antd';
 import { scrollToY } from '@/utils/sliding-scroll';
-
+import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
 
 const Message = (props) => {
   // const msg = props.msg;
 
   const [msg, setMsg] = useState([]);
+
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (props.msg && props.msg.length != 0) {
@@ -20,8 +22,15 @@ const Message = (props) => {
     }
   }, [props.msg]);
 
-  useEffect(() => {
-    toBottom();
+  useUpdateEffect(() => {
+    if (count === 0) {
+      // 首次进入页面，滚动到底部
+      toBottom(0);
+      setCount(1);
+    } else {
+      // 新消息，淡入淡出
+      toBottom(500);
+    }
   }, [msg]);
 
   const user = (obj) => {
@@ -29,9 +38,9 @@ const Message = (props) => {
     else return obj.user;
   };
 
-  const toBottom = () => {
+  const toBottom = (t) => {
     let ele = document.getElementById('scroll');
-    scrollToY(ele.scrollHeight, 500, ele);
+    scrollToY(ele.scrollHeight, t, ele);
   };
 
   return (
