@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { TabBar, ListView } from 'antd-mobile';
 import { Avatar, Button } from 'antd';
+import { scrollToY } from '@/utils/sliding-scroll';
 
 import styles from './index.less';
 
 const Message = (props) => {
-  const msg = props.msg;
+  // const msg = props.msg;
+
+  const [msg, setMsg] = useState([]);
 
   useEffect(() => {
-    if (msg && msg.length != 0) {
-      // console.log(msg);
+    if (props.msg && props.msg.length != 0) {
+      // 截取最近100条消息
+      let msgArr = [...props.msg];
+      if (msgArr.length > 100) {
+        msgArr = msgArr.splice(msgArr.length - 100, msgArr.length);
+      }
+      setMsg(msgArr);
     }
+  }, [props.msg]);
+
+  useEffect(() => {
+    toBottom();
   }, [msg]);
 
   const user = (obj) => {
@@ -19,9 +29,14 @@ const Message = (props) => {
     else return obj.user;
   };
 
+  const toBottom = () => {
+    let ele = document.getElementById('scroll');
+    scrollToY(ele.scrollHeight, 500, ele);
+  };
+
   return (
     <>
-      <div className={styles.chat}>
+      <div id="scroll" className={styles.chat}>
         <ul>
           {msg.map((i, k) => (
             <li key={k} className={i.isMe ? styles.me : styles.other}>
