@@ -1,182 +1,223 @@
-// ES6 Imports
-import React from 'react';
-import * as Scroll from 'react-scroll';
-// import {
-//   Link,
-//   Button,
-//   Element,
-//   Events,
-//   animateScroll as scroll,
-//   scrollSpy,
-//   scroller,
-// } from 'react-scroll';
+import React, { useState, useEffect, useRef } from 'react';
+import { message, Avatar } from 'antd';
+import { scrollToY } from '@/utils/sliding-scroll';
+import { List, AutoSizer } from 'react-virtualized';
+import 'react-virtualized/styles.css';
+import styles from './index.less';
 
-// Or Access Link,Element,etc as follows
-const Link = Scroll.Link;
-const Button = Scroll.Button;
-const Element = Scroll.Element;
-const Events = Scroll.Events;
-const scroll = Scroll.animateScroll;
-const scrollSpy = Scroll.scrollSpy;
+// List data as an array of strings
+const list = [
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+  'aa',
+];
 
-// ES5
-// const React = require('react');
-// const Scroll = require('react-scroll');
-
-// const Link = Scroll.Link;
-// const Button = Scroll.Button;
-// const Element = Scroll.Element;
-// const Events = Scroll.Events;
-// const scroll = Scroll.animateScroll;
-// const scrollSpy = Scroll.scrollSpy;
-
-class Section extends React.Component {
-  componentDidMount() {
-    Events.scrollEvent.register('begin', function (to, element) {
-      console.log('begin', arguments);
-    });
-
-    Events.scrollEvent.register('end', function (to, element) {
-      console.log('end', arguments);
-    });
-
-    scrollSpy.update();
-  }
-  componentWillUnmount() {
-    Events.scrollEvent.remove('begin');
-    Events.scrollEvent.remove('end');
-  }
-  scrollToTop() {
-    scroll.scrollToTop();
-  }
-  scrollToBottom() {
-    scroll.scrollToBottom();
-  }
-  scrollTo() {
-    scroll.scrollTo(100);
-  }
-  scrollMore() {
-    scroll.scrollMore(100);
-  }
-  handleSetActive(to) {
-    console.log(to);
-  }
-  render() {
-    return (
-      <div>
-        <Link
-          activeClass="active"
-          to="test1"
-          spy={true}
-          smooth={true}
-          offset={50}
-          duration={500}
-          onSetActive={this.handleSetActive}
-        >
-          Test 1
-        </Link>
-        <Link
-          activeClass="active"
-          to="test1"
-          spy={true}
-          smooth={true}
-          offset={50}
-          duration={500}
-          delay={1000}
-        >
-          Test 2 (delay)
-        </Link>
-        <Link
-          className="test6"
-          to="anchor"
-          spy={true}
-          smooth={true}
-          duration={500}
-        >
-          Test 6 (anchor)
-        </Link>
-        {/* <Button
-          activeClass="active"
-          className="btn"
-          type="submit"
-          value="Test 2"
-          to="test2"
-          spy={true}
-          smooth={true}
-          offset={50}
-          duration={500}
-        >
-          Test 2
-        </Button> */}
-
-        <Element name="test1" className="element">
-          test 1
-        </Element>
-
-        <Element name="test2" className="element">
-          test 2
-        </Element>
-
-        <div id="anchor" className="element">
-          test 6 (anchor)
-        </div>
-
-        <Link to="firstInsideContainer" containerId="containerElement">
-          Go to first element inside container
-        </Link>
-
-        <Link to="secondInsideContainer" containerId="containerElement">
-          Go to second element inside container
-        </Link>
-        <div className="element" id="containerElement">
-          <Element name="firstInsideContainer">
-            first element inside container
-          </Element>
-
-          <Element name="secondInsideContainer">
-            second element inside container
-          </Element>
-        </div>
-
-        <a onClick={this.scrollToTop}>To the top!</a>
-        <br />
-        <a onClick={this.scrollToBottom}>To the bottom!</a>
-        <br />
-        <a onClick={this.scrollTo}>Scroll to 100px from the top</a>
-        <br />
-        <a onClick={this.scrollMore}>
-          Scroll 100px more from the current position!
-        </a>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-        <p>------------------------------</p>
-      </div>
-    );
-  }
+function rowRenderer({
+  key, // Unique key within array of rows
+  index, // Index of row within collection
+  isScrolling, // The List is currently being scrolled
+  isVisible, // This row is visible within the List (eg it is not an overscanned row)
+  style, // Style object to be applied to row (to position it)
+}) {
+  return (
+    <div key={key} style={style}>
+      {list[index] + key}
+    </div>
+  );
 }
 
-export default Section;
+const ListView = () => {
+  return (
+    <div
+      style={{
+        height: '100%',
+        padding: '10px',
+      }}
+    >
+      <AutoSizer>
+        {({ height, width }) => (
+          <List
+            id="scroll"
+            height={height}
+            width={width}
+            rowCount={list.length}
+            rowHeight={30}
+            rowRenderer={rowRenderer}
+            scrollToIndex={list.length - 1}
+          />
+        )}
+      </AutoSizer>
+    </div>
+  );
+};
+
+const Message = () => {
+  const [msg, setMsg] = useState([]);
+
+  useEffect(() => {
+    let arr = [];
+    for (let i = 0; i < 100; i++) {
+      let obj = {};
+      obj.k = i + '';
+      obj.data = 'hello ' + i;
+      obj.isMe = i % 2 == 0 ? true : false;
+      obj.user = 'time';
+      obj.root = false;
+      obj.avatar_color = { background: '#00b578' };
+      arr.push(obj);
+    }
+    setMsg(arr);
+  }, []);
+
+  useEffect(() => {
+    if (msg?.length > 0) {
+      toBottom();
+    }
+  }, [msg]);
+
+  const user = (obj) => {
+    if (!obj.root) return obj.user.charAt(0).toUpperCase();
+    else return obj.user;
+  };
+
+  const toBottom = () => {
+    let ele = document.getElementById('scroll');
+    scrollToY(ele.scrollHeight, 500, ele);
+  };
+
+  const add = () => {
+    let arr = [...msg];
+    let obj = {};
+    let i = arr.length;
+    obj.k = i + '';
+    obj.data = 'hello ' + i;
+    obj.isMe = i % 2 == 0 ? true : false;
+    obj.user = 'time';
+    obj.root = false;
+    obj.avatar_color = { background: '#00b578' };
+    arr.push(obj);
+    setMsg(arr);
+  };
+
+  function rowRenderer({
+    key, // Unique key within array of rows
+    index, // Index of row within collection
+    isScrolling, // The List is currently being scrolled
+    isVisible, // This row is visible within the List (eg it is not an overscanned row)
+    style, // Style object to be applied to row (to position it)
+  }) {
+    let i = msg[index];
+    return (
+      <li key={key} style={style} className={i.isMe ? styles.me : styles.other}>
+        <Avatar style={i.avatar_color}>{user(i)}</Avatar>
+        <div style={{ margin: '7px 56px 0px' }}>{i.user}</div>
+        <p className={styles.message}>{i.data}</p>
+      </li>
+    );
+  }
+
+  return (
+    <>
+      <div className={styles.chat}>
+        <ul>
+          <AutoSizer>
+            {({ height, width }) => (
+              <List
+                id="scroll"
+                height={height}
+                width={width}
+                rowCount={msg.length}
+                rowHeight={80}
+                rowRenderer={rowRenderer}
+                // scrollToIndex={msg.length - 1}
+              />
+            )}
+          </AutoSizer>
+        </ul>
+      </div>
+      <button onClick={toBottom}>bottom</button>
+      <button onClick={add}>add</button>
+    </>
+  );
+};
+
+const Index = () => {
+  return <Message />;
+};
+
+export default Index;

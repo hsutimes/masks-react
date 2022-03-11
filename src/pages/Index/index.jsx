@@ -45,14 +45,6 @@ class TabBarExample extends React.Component {
           if (!api.conn) {
             api.init(user.name);
           }
-
-          // 监听全局消息
-          // api.onMessage((msg) => {
-          //   console.log(msg);
-          //   if (history.location.pathname === '/') {
-          //     message.info(msg);
-          //   }
-          // });
         },
       );
     }

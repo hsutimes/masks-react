@@ -4,7 +4,7 @@ import { history, useModel } from 'umi';
 import { useUpdateEffect } from 'ahooks';
 
 const index = (props) => {
-  const { conn, nums, message } = useModel('useWebSocketModel');
+  const { conn, disConnect, nums } = useModel('useWebSocketModel');
   const [user, setUser] = useState(props.user);
   useEffect(() => {
     if (props.user !== user) {
@@ -13,15 +13,20 @@ const index = (props) => {
   }, [props.user]);
 
   useEffect(() => {
-    // console.log('onmessage');
+    // console.log('');
   }, []);
 
   useUpdateEffect(() => {
-    console.log(nums);
+    // console.log(nums);
   }, [nums]);
 
   const enter = () => {
     history.push('/chat');
+  };
+
+  const offLine = () => {
+    disConnect();
+    history.push('/login');
   };
 
   return (
@@ -45,6 +50,15 @@ const index = (props) => {
         >
           <Button type="primary" onClick={enter}>
             进入
+          </Button>
+        </div>
+        <div
+          style={{
+            padding: 30,
+          }}
+        >
+          <Button type="primary" onClick={offLine}>
+            下线
           </Button>
         </div>
       </div>

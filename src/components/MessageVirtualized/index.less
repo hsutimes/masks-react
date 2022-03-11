@@ -1,15 +1,14 @@
 .chat {
   cursor: pointer;
-  padding: 0 10px;
-  overflow-y: scroll;
   height: 100%;
+  // padding: 0 10px;
   ul {
     height: 100%;
     width: 100%;
     list-style-type: none;
-    display: unset;
+    // display: contents;
     li {
-      // padding: 2px 40px;
+      padding: 0px 10px;
       span {
         border-radius: 50%;
         width: 46px;
@@ -19,12 +18,13 @@
       }
       p.message {
         min-height: 25px;
-        line-height: 30px;
+        // line-height: 30px;
         max-width: 56%;
         display: inline-block;
         border-radius: 15px;
         padding: 6px 10px;
         margin-top: 0px;
+        margin-bottom: 10px;
         text-align: left;
         word-break: break-all;
       }
@@ -43,7 +43,7 @@
     }
     li.me {
       text-align: right;
-      overflow: hidden;
+      // overflow: hidden;
       span {
         float: right;
         margin-top: 7px;
@@ -60,7 +60,7 @@
     }
     li.other {
       text-align: left;
-      overflow: hidden;
+      // overflow: hidden;
       // margin-left: -40px;
       span {
         float: left;
