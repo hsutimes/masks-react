@@ -6,9 +6,9 @@ export default () => {
   const uploadImage = useCallback(async (body, cb) => {
     const r = await uploadImageList(body);
     if (r.success) {
-      cb(true, r.result, '上传成功');
+      cb(true, r.url, '上传成功');
     } else {
-      cb(false, [], r.message);
+      cb(false, [], r.error);
     }
   }, []);
 

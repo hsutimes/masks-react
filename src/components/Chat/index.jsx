@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavBar, Input, List, Button, Space, Popup } from 'antd-mobile-v5';
+import { message } from 'antd';
 import { history, useModel } from 'umi';
 import Cookies from 'js-cookie';
 import { useKeyPress } from 'ahooks';
@@ -59,6 +60,12 @@ const Chat = () => {
     // console.log(value);
     sendMsg(value);
     setValue('');
+  };
+
+  // 发送图片
+  const onUploadImg = (e) => {
+    setVisible(false);
+    sendMsg('img|' + e);
   };
 
   const handleKeyPress = (event) => {
@@ -122,9 +129,9 @@ const Chat = () => {
           onMaskClick={() => {
             setVisible(false);
           }}
-          // bodyStyle={{ height: '40vh' }}
+          bodyStyle={{ height: '40vh' }}
         >
-          <PopupContent />
+          <PopupContent onUploadImg={onUploadImg} />
         </Popup>
       </div>
     </>
@@ -135,7 +142,9 @@ const Chat = () => {
  * 弹出层内容
  * @returns
  */
-const PopupContent = () => {
+const PopupContent = (props) => {
+  const { uploadImage } = useModel('useImgModel');
+
   const [fileList, setFileList] = useState([]);
 
   const onImg = () => {
@@ -146,7 +155,18 @@ const PopupContent = () => {
     const { files } = e.target;
     setFileList(files);
     let file = files[0];
-    console.log(file);
+    let body = new FormData();
+    body.append('fileupload', file);
+    uploadImage(body, (b, d, msg) => {
+      if (b) {
+        // message.info(msg);
+        console.log(d);
+        props.onUploadImg(d);
+      } else {
+        message.info(msg);
+        console.log(msg);
+      }
+    });
   };
 
   return (

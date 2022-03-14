@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Avatar, Button } from 'antd';
+import { Avatar, Button, Image } from 'antd';
 import { scrollToY } from '@/utils/sliding-scroll';
 import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
@@ -46,15 +46,27 @@ const Message = (props) => {
   return (
     <>
       <div id="scroll" className={styles.chat}>
-        <ul>
-          {msg.map((i, k) => (
-            <li key={k} className={i.isMe ? styles.me : styles.other}>
-              <Avatar style={i.avatar_color}>{user(i)}</Avatar>
-              <div style={{ margin: '7px 56px 0px' }}>{i.user}</div>
-              <p className={styles.message}>{i.data}</p>
-            </li>
-          ))}
-        </ul>
+        <Image.PreviewGroup>
+          <ul>
+            {msg.map((i, k) => (
+              <li key={k} className={i.isMe ? styles.me : styles.other}>
+                <Avatar style={i.avatar_color}>{user(i)}</Avatar>
+                <div style={{ margin: '7px 56px 0px' }}>{i.user}</div>
+                {i.data.includes('img|') ? (
+                  <div className={styles.img}>
+                    <Image
+                      src={i.data.split('|')[1]}
+                      style={{ borderRadius: 8 }}
+                      alt=""
+                    />
+                  </div>
+                ) : (
+                  <p className={styles.message}>{i.data}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </Image.PreviewGroup>
       </div>
     </>
   );
