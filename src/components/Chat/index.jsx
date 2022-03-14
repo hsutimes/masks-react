@@ -1,11 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavBar, Input, List, Button, Space, Popup } from 'antd-mobile-v5';
+import {
+  NavBar,
+  Input,
+  List,
+  Button,
+  Space,
+  Popup,
+  Toast,
+} from 'antd-mobile-v5';
 import { message } from 'antd';
 import { history, useModel } from 'umi';
 import Cookies from 'js-cookie';
 import { useKeyPress } from 'ahooks';
 
-import { PlusCircleOutlined } from '@ant-design/icons';
+import {
+  PlusCircleOutlined,
+  PictureOutlined,
+  SmileOutlined,
+} from '@ant-design/icons';
 import Message from '@/components/Message';
 import styles from './index.less';
 
@@ -101,9 +113,12 @@ const Chat = () => {
               extra={
                 <>
                   <Space>
-                    <Button type="primary" onClick={plus}>
-                      <PlusCircleOutlined />
-                    </Button>
+                    <div className={styles.plus}>
+                      <PlusCircleOutlined
+                        style={{ fontSize: '35px' }}
+                        onClick={plus}
+                      />
+                    </div>
                     <Button color="primary" fill="solid" onClick={send}>
                       发送
                     </Button>
@@ -129,7 +144,7 @@ const Chat = () => {
           onMaskClick={() => {
             setVisible(false);
           }}
-          bodyStyle={{ height: '40vh' }}
+          // bodyStyle={{ height: '40vh' }}
         >
           <PopupContent onUploadImg={onUploadImg} />
         </Popup>
@@ -151,6 +166,14 @@ const PopupContent = (props) => {
     const upload = document.getElementById('upload_file');
     upload.click();
   };
+
+  const onEmoji = () => {
+    Toast.show({
+      content: '敬请期待',
+      position: 'top',
+    });
+  };
+
   const onChange = (e) => {
     const { files } = e.target;
     setFileList(files);
@@ -163,16 +186,21 @@ const PopupContent = (props) => {
         console.log(d);
         props.onUploadImg(d);
       } else {
-        message.info(msg);
+        message.error(msg);
         console.log(msg);
       }
     });
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div className={styles.popup}>
       <Space>
-        <Button onClick={onImg}>图片</Button>
+        <div className={styles.f_img} onClick={onImg}>
+          <div className={styles.icon}>
+            <PictureOutlined style={{ fontSize: '35px' }} />
+          </div>
+          <span>图片</span>
+        </div>
         <input
           id="upload_file"
           style={{ display: 'none' }}
@@ -181,7 +209,12 @@ const PopupContent = (props) => {
           accept="image/png, image/jpeg"
           onChange={onChange}
         ></input>
-        <Button>表情</Button>
+        <div className={styles.f_img} onClick={onEmoji}>
+          <div className={styles.icon}>
+            <SmileOutlined style={{ fontSize: '35px' }} />
+          </div>
+          <span>表情</span>
+        </div>
       </Space>
     </div>
   );
