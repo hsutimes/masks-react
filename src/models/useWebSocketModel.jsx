@@ -96,8 +96,6 @@ export default function useWebSocketModel() {
 
   // 初始化连接
   const init = useCallback((name) => {
-    var supportsVibrate = 'vibrate' in navigator;
-    notification.info({ message: 'vibrate: ' + supportsVibrate, duration: 3 });
     if (name) {
       setNickname(name);
       setHost(conf.host + '/chat?token=key&&name=' + name);

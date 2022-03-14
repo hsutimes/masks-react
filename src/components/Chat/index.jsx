@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavBar, Input, List, Button } from 'antd-mobile-v5';
+import { NavBar, Input, List, Button, Space, Popup } from 'antd-mobile-v5';
 import { history, useModel } from 'umi';
 import Cookies from 'js-cookie';
 import { useKeyPress } from 'ahooks';
 
+import { PlusCircleOutlined } from '@ant-design/icons';
 import Message from '@/components/Message';
 import styles from './index.less';
 
@@ -11,6 +12,8 @@ const Chat = () => {
   const { conn, nums, message, sendMsg } = useModel('useWebSocketModel');
   const [data, setData] = useState([]);
   const [value, setValue] = useState('');
+
+  const [visible, setVisible] = useState(false);
 
   // 监听回车事件
   useKeyPress('enter', (event) => {
@@ -69,6 +72,10 @@ const Chat = () => {
     history.goBack();
   };
 
+  const plus = () => {
+    setVisible(true);
+  };
+
   return (
     <>
       <div className={styles.body}>
@@ -85,9 +92,16 @@ const Chat = () => {
             <List.Item
               prefix=""
               extra={
-                <Button color="primary" fill="solid" onClick={send}>
-                  发送
-                </Button>
+                <>
+                  <Space>
+                    <Button type="primary" onClick={plus}>
+                      <PlusCircleOutlined />
+                    </Button>
+                    <Button color="primary" fill="solid" onClick={send}>
+                      发送
+                    </Button>
+                  </Space>
+                </>
               }
             >
               <Input
@@ -103,8 +117,53 @@ const Chat = () => {
             </List.Item>
           </List>
         </div>
+        <Popup
+          visible={visible}
+          onMaskClick={() => {
+            setVisible(false);
+          }}
+          // bodyStyle={{ height: '40vh' }}
+        >
+          <PopupContent />
+        </Popup>
       </div>
     </>
+  );
+};
+
+/**
+ * 弹出层内容
+ * @returns
+ */
+const PopupContent = () => {
+  const [fileList, setFileList] = useState([]);
+
+  const onImg = () => {
+    const upload = document.getElementById('upload_file');
+    upload.click();
+  };
+  const onChange = (e) => {
+    const { files } = e.target;
+    setFileList(files);
+    let file = files[0];
+    console.log(file);
+  };
+
+  return (
+    <div style={{ padding: '20px' }}>
+      <Space>
+        <Button onClick={onImg}>图片</Button>
+        <input
+          id="upload_file"
+          style={{ display: 'none' }}
+          type="file"
+          // multiple
+          accept="image/png, image/jpeg"
+          onChange={onChange}
+        ></input>
+        <Button>表情</Button>
+      </Space>
+    </div>
   );
 };
 export default Chat;
