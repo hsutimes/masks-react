@@ -55,6 +55,7 @@ const Message = (props) => {
                 {i.data.includes('img|') ? (
                   <div className={styles.img}>
                     <Image
+                      fallback="https://img.zhinianblog.com/img/2979"
                       src={i.data.split('|')[1]}
                       style={{ borderRadius: 8 }}
                       alt=""
