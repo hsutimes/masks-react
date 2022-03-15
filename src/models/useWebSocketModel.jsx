@@ -99,9 +99,9 @@ export default function useWebSocketModel() {
     if (name) {
       setNickname(name);
       setHost(`${conf.host}/chat?token=${conf.token}&name=${name}`);
-      if (historyMsg) {
-        setMessage(historyMsg);
-      }
+      // if (historyMsg) {
+      //   setMessage(historyMsg);
+      // }
     }
   }, []);
 
@@ -145,6 +145,13 @@ export default function useWebSocketModel() {
       setPeoples(l);
     } else if (msg.includes('entered') || msg.includes('left')) {
       // donothing
+    } else if (msg.includes('history')) {
+      let l = msg.slice('history: '.length, msg.length);
+      if (l) {
+        l = l.split(',');
+        // console.log(l);
+        setMessage(l);
+      }
     } else {
       let t = [...message];
       t.push(msg);
