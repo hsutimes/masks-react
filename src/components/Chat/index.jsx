@@ -158,7 +158,7 @@ const Chat = () => {
  * @returns
  */
 const PopupContent = (props) => {
-  const { uploadImage } = useModel('useImgModel');
+  const { uploadImageSingle } = useModel('useImgModel');
 
   const [fileList, setFileList] = useState([]);
 
@@ -178,9 +178,8 @@ const PopupContent = (props) => {
     const { files } = e.target;
     setFileList(files);
     let file = files[0];
-    let body = new FormData();
-    body.append('fileupload', file);
-    uploadImage(body, (b, d, msg) => {
+    let body = { file: file };
+    uploadImageSingle(body, (b, d, msg) => {
       if (b) {
         // message.info(msg);
         console.log(d);
