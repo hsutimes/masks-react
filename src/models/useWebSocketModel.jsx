@@ -98,7 +98,7 @@ export default function useWebSocketModel() {
   const init = useCallback((name) => {
     if (name) {
       setNickname(name);
-      setHost(conf.host + '/chat?token=key&&name=' + name);
+      setHost(`${conf.host}/chat?token=${conf.token}&name=${name}`);
       if (historyMsg) {
         setMessage(historyMsg);
       }
