@@ -71,7 +71,7 @@ export default function useWebSocketModel() {
       onMessage(e, ws);
     },
     onError: (e, ws) => {
-      notification.error({ message: '连接出错' });
+      // notification.error({ message: '连接出错' });
     },
     onClose: (e, ws) => {
       notification.error({ message: '连接关闭' });

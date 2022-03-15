@@ -158,7 +158,10 @@ const Chat = () => {
  * @returns
  */
 const PopupContent = (props) => {
-  const { uploadImageSingle } = useModel('useImgModel');
+  const { uploadImageSingle, uploadImageSingleProgress } =
+    useModel('useImgModel');
+
+  const handler = useRef();
 
   const [fileList, setFileList] = useState([]);
 
@@ -179,16 +182,42 @@ const PopupContent = (props) => {
     setFileList(files);
     let file = files[0];
     let body = { file: file };
+    handler.current = Toast.show({
+      icon: 'loading',
+      content: '上传中…',
+      maskClickable: false,
+      duration: 0,
+    });
+
     uploadImageSingle(body, (b, d, msg) => {
+      handler.current?.close();
+      handler.current = null;
       if (b) {
-        // message.info(msg);
+        Toast.show({
+          icon: 'success',
+          content: '上传成功',
+          duration: 1.5,
+        });
         console.log(d);
         props.onUploadImg(d);
       } else {
-        message.error(msg);
+        Toast.show({
+          icon: 'fail',
+          content: '上传失败',
+          duration: 1.5,
+        });
         console.log(msg);
       }
     });
+    setTimeout(() => {
+      if (handler.current) {
+        handler.current?.close();
+        Toast.show({
+          icon: 'fail',
+          content: '上传失败',
+        });
+      }
+    }, 10000);
   };
 
   return (
