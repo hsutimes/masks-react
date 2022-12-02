@@ -10,7 +10,7 @@ var routes = [
 
 if (isDev) {
   routes = [
-    { exact: true, path: '/test', component: '@/pages/Dev' },
+    { exact: true, path: '/test', component: '@/pages/Test' },
     ...routes,
   ];
 }

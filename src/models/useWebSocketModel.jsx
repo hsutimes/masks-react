@@ -113,7 +113,7 @@ export default function useWebSocketModel() {
         clearInterval(t);
       }
       if (ws.readyState == ReadyState.Open) {
-        ws.send('ping');
+        ws.send(window.btoa('ping'));
       }
     }, 10000);
   };
@@ -129,13 +129,14 @@ export default function useWebSocketModel() {
   const sendMsg = (msg) => {
     if (webSocketIns) {
       // sendMessage(msg); // 执行出现 disconnected 异常
-      webSocketIns.send(msg);
+      let cryptograph = window.btoa(encodeURIComponent(msg));
+      webSocketIns.send(cryptograph);
     }
   };
 
   // 接收消息
   const onMessage = (e, ws) => {
-    let msg = e.data;
+    let msg = decodeURIComponent(window.atob(e.data));
     if (msg.includes('nums')) {
       let l = parseInt(msg.split(': ')[1]);
       setNums(l);
