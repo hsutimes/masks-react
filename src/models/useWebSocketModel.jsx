@@ -38,7 +38,7 @@ const ReadyState = {
  * @returns
  */
 export default function useWebSocketModel() {
-  const [nickname, setNickname] = useCookieState('account');
+  const [user, setUser] = useCookieState(null);
 
   const [host, setHost] = useState('');
 
@@ -96,10 +96,10 @@ export default function useWebSocketModel() {
   }, [message]);
 
   // 初始化连接
-  const init = useCallback((name) => {
-    if (name) {
-      setNickname(name);
-      setHost(`${conf.host}/chat?token=${conf.token}&name=${name}`);
+  const init = useCallback((user) => {
+    if (user?.name) {
+      setUser(user);
+      setHost(`${conf.host}/chat?token=${conf.token}&name=${user.name}`);
       // if (historyMsg) {
       //   setMessage(historyMsg);
       // }
@@ -168,6 +168,7 @@ export default function useWebSocketModel() {
   };
 
   return {
+    user,
     ReadyState,
     conn,
     nums,

@@ -2,10 +2,28 @@ const isDev = process.env.NODE_ENV === 'development';
 
 var routes = [
   // { exact: false, path: '*', redirect: '/login' },
-  { exact: true, path: '/', component: '@/pages/Index2' },
+
   { exact: true, path: '/login', component: '@/pages/Login' },
   { exact: true, path: '/chat', component: '@/pages/Chat' },
-  { exact: true, path: '/friend', component: '@/components/Friends' },
+  {
+    path: '/',
+    redirect: '/app',
+  },
+  {
+    // exact: false,
+    layout: false,
+    path: '/app',
+    component: '@/layouts/Index',
+    routes: [
+      {
+        path: '/app',
+        redirect: '/app/home',
+      },
+      { path: '/app/home', component: '@/pages/Home' },
+      { path: '/app/friend', component: '@/pages/Friends' },
+      { component: '@/pages/404' },
+    ],
+  },
   { component: '@/pages/404' },
 ];
 

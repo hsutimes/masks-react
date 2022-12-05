@@ -3,14 +3,10 @@ import { Avatar, Button } from 'antd';
 import { history, useModel } from 'umi';
 import { useUpdateEffect } from 'ahooks';
 
+import styles from './index.less';
+
 const index = (props) => {
-  const { conn, disConnect, nums } = useModel('useWebSocketModel');
-  const [user, setUser] = useState(props.user);
-  useEffect(() => {
-    if (props.user !== user) {
-      setUser(props.user);
-    }
-  }, [props.user]);
+  const { user, conn, disConnect, nums } = useModel('useWebSocketModel');
 
   useEffect(() => {
     // console.log('');
@@ -31,12 +27,7 @@ const index = (props) => {
 
   return (
     <>
-      <div
-        style={{
-          backgroundColor: 'white',
-          textAlign: 'center',
-        }}
-      >
+      <div className={styles.main}>
         {user && (
           <Avatar size="large" style={user.avatar_color}>
             {user.name.charAt(0).toUpperCase()}

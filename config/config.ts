@@ -8,7 +8,7 @@ export default defineConfig({
   dynamicImport: {
     loading: '@ant-design/pro-layout/es/PageLoading',
   },
-  history: { type: 'hash' },
+  // history: { type: 'hash' },
   hash: true,
   antd: { mobile: false },
   routes,
