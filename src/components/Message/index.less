@@ -1,85 +1,80 @@
 .chat {
   cursor: pointer;
-  padding: 0 10px;
+  // padding: 0 10px;
   overflow-y: scroll;
   height: 100%;
-  ul {
-    height: 100%;
-    width: 100%;
-    list-style-type: none;
-    display: unset;
-    li {
-      // padding: 2px 40px;
+
+  .item {
+    display: flex;
+    // box-sizing: border-box;
+    margin: 0 10px 10px;
+    .avatar {
+      // margin: 0 12px;
       span {
-        border-radius: 50%;
-        width: 46px;
-        height: 46px;
-        font-size: 25px;
-        // line-height: 46px;
+        // border-radius: 50%;
+        // width: 46px;
+        // height: 46px;
+        // font-size: 25px;
       }
-      p.message {
-        min-height: 25px;
-        line-height: 30px;
-        max-width: 75%;
-        display: inline-block;
-        border-radius: 15px;
-        padding: 6px 10px;
-        margin-top: 0px;
-        text-align: left;
+    }
+    .msg_body {
+      .nickname {
+        span {
+          color: #666;
+          font-size: 14px;
+        }
+      }
+      .message {
+        position: relative;
+        font-size: 15px;
+        line-height: 24px;
+        padding: 12px;
+        color: #555;
+        background-color: #fefeff;
+        border-radius: 8px;
+        max-width: 400px;
+        // min-height: 40px;
         word-break: break-all;
       }
-      p.name {
-        color: #666;
-        font-size: 14px;
-        position: relative;
-      }
-      div.img {
+      .img {
+        display: inline-block;
         padding: 6px 10px;
         max-width: 80%;
-        display: inline-block;
+        max-height: 300px;
         margin-bottom: 1em;
       }
     }
-    li.time {
-      height: 40px;
-      line-height: 40px;
-      font-size: 14px;
-      color: #666;
-      text-align: center;
-    }
-    li.me {
-      text-align: right;
-      overflow: hidden;
-      span {
-        float: right;
-        margin-top: 7px;
+  }
+
+  .time {
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+  }
+  .me {
+    flex-direction: row-reverse;
+    .msg_body {
+      margin-right: 12px;
+      .nickname {
+        text-align: right;
       }
-      p.message {
-        margin-right: 10px;
-        background: #1e90ff;
-        color: #fff;
-        border-top-right-radius: 3px;
-      }
-      p.name {
-        right: 14px;
+      .message {
+        color: #555;
+        background-color: #1e80ff3d;
+        border-radius: 8px 2px 8px 8px;
       }
     }
-    li.other {
-      text-align: left;
-      overflow: hidden;
-      // margin-left: -40px;
-      span {
-        float: left;
-        margin-top: 7px;
-      }
-      p.message {
-        margin-left: 10px;
-        background: #fff;
-        color: #000;
-        border-top-left-radius: 3px;
-      }
-      p.name {
-        left: 14px;
+  }
+  .other {
+    flex-direction: row;
+    .msg_body {
+      margin-left: 12px;
+      .message {
+        color: #555;
+        background-color: #fefeff;
+        border-radius: 2px 8px 8px 8px;
       }
     }
   }

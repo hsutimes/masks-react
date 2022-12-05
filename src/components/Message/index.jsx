@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Avatar, Button, Image } from 'antd';
 import { scrollToY } from '@/utils/sliding-scroll';
 import { useUpdateEffect } from 'ahooks';
+import classNames from 'classnames';
 import styles from './index.less';
 
 const Message = (props) => {
@@ -47,11 +48,24 @@ const Message = (props) => {
     <>
       <div id="scroll" className={styles.chat}>
         <Image.PreviewGroup>
-          <ul>
-            {msg.map((i, k) => (
-              <li key={k} className={i.isMe ? styles.me : styles.other}>
-                <Avatar style={i.avatar_color}>{user(i)}</Avatar>
-                <div style={{ margin: '7px 56px 0px' }}>{i.user}</div>
+          {msg.map((i, k) => (
+            <div
+              key={k}
+              className={classNames(
+                styles.item,
+                i.isMe ? styles.me : styles.other,
+              )}
+            >
+              <div className={styles.avatar}>
+                <Avatar style={i.avatar_color} size={38}>
+                  {user(i)}
+                </Avatar>
+              </div>
+              <div className={styles.msg_body}>
+                <div className={styles.nickname}>
+                  <span>{i.user}</span>
+                  {/* <span>Anonymity</span> */}
+                </div>
                 {i.data.includes('img|') ? (
                   <div className={styles.img}>
                     <Image
@@ -62,11 +76,13 @@ const Message = (props) => {
                     />
                   </div>
                 ) : (
-                  <p className={styles.message}>{i.data}</p>
+                  <div className={styles.msg_bg}>
+                    <div className={styles.message}>{i.data}</div>
+                  </div>
                 )}
-              </li>
-            ))}
-          </ul>
+              </div>
+            </div>
+          ))}
         </Image.PreviewGroup>
       </div>
     </>
