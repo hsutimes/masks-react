@@ -81,7 +81,9 @@ const Message = (props) => {
                   </div>
                 ) : (
                   <div className={styles.msg_bg}>
-                    <div className={styles.message}>{i.data}</div>
+                    <div className={styles.message}>
+                      <span>{i.data}</span>
+                    </div>
                   </div>
                 )}
               </div>
