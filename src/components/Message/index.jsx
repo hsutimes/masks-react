@@ -3,6 +3,7 @@ import { Avatar, Button, Image } from 'antd';
 import { scrollToY } from '@/utils/sliding-scroll';
 import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
+import conf from '@/utils/conf';
 import styles from './index.less';
 
 const Message = (props) => {
@@ -62,10 +63,13 @@ const Message = (props) => {
                 </Avatar>
               </div>
               <div className={styles.msg_body}>
-                <div className={styles.nickname}>
-                  <span>{i.user}</span>
-                  {/* <span>Anonymity</span> */}
-                </div>
+                {conf.settings.isShowNickname && (
+                  <div className={styles.nickname}>
+                    <span>
+                      {conf.settings.isAnonymity ? 'Anonymity' : i.user}
+                    </span>
+                  </div>
+                )}
                 {i.data.includes('img|') ? (
                   <div className={styles.img}>
                     <Image
