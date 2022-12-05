@@ -8,6 +8,8 @@ import {
   Popup,
   Toast,
 } from 'antd-mobile-v5';
+import { MoreOutline } from 'antd-mobile-icons';
+
 import { message } from 'antd';
 import { history, useModel } from 'umi';
 import Cookies from 'js-cookie';
@@ -19,6 +21,8 @@ import {
   SmileOutlined,
 } from '@ant-design/icons';
 import Message from '@/components/Message';
+import Friends from '@/components/Friends';
+
 import styles from './index.less';
 
 const Chat = () => {
@@ -27,6 +31,7 @@ const Chat = () => {
   const [value, setValue] = useState('');
 
   const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
 
   // 监听回车事件
   useKeyPress('enter', (event) => {
@@ -98,7 +103,19 @@ const Chat = () => {
   return (
     <>
       <div className={styles.body}>
-        <NavBar onBack={back}>Enjoying Time ({nums})</NavBar>
+        <NavBar
+          onBack={back}
+          right={
+            <MoreOutline
+              fontSize={24}
+              onClick={() => {
+                setVisible2(true);
+              }}
+            />
+          }
+        >
+          洽谈室 ({nums})
+        </NavBar>
         <div className={styles.message}>
           <Message msg={data} />
         </div>
@@ -113,12 +130,12 @@ const Chat = () => {
               extra={
                 <>
                   <Space>
-                    <div className={styles.plus}>
+                    {/* <div className={styles.plus}>
                       <PlusCircleOutlined
                         style={{ fontSize: '35px' }}
                         onClick={plus}
                       />
-                    </div>
+                    </div> */}
                     <Button color="primary" fill="solid" onClick={send}>
                       发送
                     </Button>
@@ -147,6 +164,16 @@ const Chat = () => {
           // bodyStyle={{ height: '40vh' }}
         >
           <PopupContent onUploadImg={onUploadImg} />
+        </Popup>
+        <Popup
+          visible={visible2}
+          onMaskClick={() => {
+            setVisible2(false);
+          }}
+          position="right"
+          bodyStyle={{ width: '60vw' }}
+        >
+          <Friends />
         </Popup>
       </div>
     </>
