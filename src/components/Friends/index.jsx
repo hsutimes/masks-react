@@ -1,5 +1,7 @@
 import React from 'react';
 import { Avatar, Button } from 'antd';
+import { Image, List } from 'antd-mobile-v5';
+
 import { history, useModel } from 'umi';
 
 const Friends = (props) => {
@@ -7,28 +9,24 @@ const Friends = (props) => {
 
   return (
     <>
-      <div
-        style={{
-          backgroundColor: 'white',
-          height: '100%',
-          textAlign: 'center',
-        }}
-      >
-        <Avatar.Group>
-          <div style={{ padding: 10 }}>
-            {peoples.map((o, k) => (
+      <List header="在线用户">
+        {peoples.map((i, k) => (
+          <List.Item
+            key={k}
+            prefix={
               <Avatar
-                key={k}
-                style={{ background: '#1890ff' }}
-                shape={'circle'}
-                size={'large'}
+                style={{ background: '#76c6b8' }}
+                shape="circle"
+                size="large"
               >
-                {o.charAt(0).toUpperCase()}
+                {i.charAt(0).toUpperCase()}
               </Avatar>
-            ))}
-          </div>
-        </Avatar.Group>
-      </div>
+            }
+          >
+            {i}
+          </List.Item>
+        ))}
+      </List>
     </>
   );
 };
