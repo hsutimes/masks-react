@@ -1,37 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Button, List, InputItem, WhiteSpace, Toast } from 'antd-mobile';
-import { createForm } from 'rc-form';
+import { Form, Button, Input, WhiteSpace, Toast } from 'antd-mobile';
 import { history } from 'umi';
 import Cookies from 'js-cookie';
 import { randomColor } from '@/utils/util.js';
 
 import styles from './index.less';
 
-const Page = (props) => {
-  const { getFieldProps, getFieldError } = props.form;
+const Login = (props) => {
+  const [form] = Form.useForm();
 
   useEffect(() => {
     let a = Cookies.get('account');
     if (a) {
       // console.log(a);
-      props.form.setFieldsValue({ account: a });
+      form.setFieldsValue({ account: a });
     }
   }, []);
 
-  const onSubmit = () => {
-    props.form.validateFields({ force: true }, (error) => {
-      if (!error) {
-        // console.log(props.form.getFieldsValue());
-        let obj = props.form.getFieldsValue();
-        console.log(obj.account);
-        Cookies.set('account', obj.account);
-        Cookies.set('avatar_color', JSON.stringify(randomColor()));
-        history.push('/');
-      } else {
-        Toast.fail('Validation failed');
-      }
-    });
-  };
   const validateAccount = (rule, value, callback) => {
     if (value && value.length >= 2) {
       callback();
@@ -40,46 +25,42 @@ const Page = (props) => {
     }
   };
 
+  const onFinish = (e) => {
+    let obj = e;
+    // console.log(obj.account);
+    Cookies.set('account', obj.account);
+    if (!Cookies.get('avatar_color')) {
+      Cookies.set('avatar_color', JSON.stringify(randomColor()));
+    }
+    history.push('/');
+  };
+
   return (
     <>
-      <form className={styles.form}>
-        <List>
-          <div style={{ padding: 10 }}>
-            <InputItem
-              {...getFieldProps('account', {
-                // initialValue: 'little ant',
-                rules: [
-                  { required: true, message: '请输入昵称' },
-                  { validator: validateAccount },
-                ],
-              })}
-              clear
-              error={!!getFieldError('account')}
-              onErrorClick={() => {
-                Toast.fail(getFieldError('account').join('、'));
-              }}
-              placeholder="输入昵称"
-            >
-              <div
-                style={{
-                  backgroundImage:
-                    'url(https://zos.alipayobjects.com/rmsportal/DfkJHaJGgMghpXdqNaKF.png)',
-                  backgroundSize: 'cover',
-                  height: '22px',
-                  width: '22px',
-                }}
-              />
-            </InputItem>
-            <WhiteSpace />
-            <Button type="primary" onClick={onSubmit}>
+      <div className={styles.form}>
+        <Form
+          form={form}
+          layout="horizontal"
+          onFinish={onFinish}
+          footer={
+            <Button block type="submit" color="primary" size="large">
               进入平行宇宙
             </Button>
-            <WhiteSpace />
-          </div>
-        </List>
-      </form>
+          }
+        >
+          <Form.Item
+            name="account"
+            label="昵称"
+            rules={[
+              { required: true, message: '昵称不能为空' },
+              { validator: validateAccount },
+            ]}
+          >
+            <Input placeholder="请输入昵称" />
+          </Form.Item>
+        </Form>
+      </div>
     </>
   );
 };
-const App = createForm()(Page);
-export default App;
+export default Login;

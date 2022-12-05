@@ -10,7 +10,7 @@ import { history } from 'umi';
 import Cookies from 'js-cookie';
 
 @window.connectModel('api', 'useWebSocketModel')
-class TabBarExample extends React.Component {
+class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -112,4 +112,4 @@ class TabBarExample extends React.Component {
   }
 }
 
-export default TabBarExample;
+export default Index;

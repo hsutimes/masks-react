@@ -34,14 +34,14 @@ const index = (props) => {
       <div
         style={{
           backgroundColor: 'white',
-          height: '100%',
-          paddingTop: '50%',
           textAlign: 'center',
         }}
       >
-        <Avatar size="large" style={user.avatar_color}>
-          {user.name.charAt(0).toUpperCase()}
-        </Avatar>
+        {user && (
+          <Avatar size="large" style={user.avatar_color}>
+            {user.name.charAt(0).toUpperCase()}
+          </Avatar>
+        )}
         <div>在线人数：{nums}</div>
         <div
           style={{

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Button } from 'antd';
-import { Image, List } from 'antd-mobile-v5';
+import { Image, List } from 'antd-mobile';
 
 import { history, useModel } from 'umi';
 

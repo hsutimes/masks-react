@@ -10,6 +10,7 @@ export default defineConfig({
   },
   history: { type: 'hash' },
   hash: true,
+  antd: { mobile: false },
   routes,
   theme: {
     'primary-color': '#76c6b8',

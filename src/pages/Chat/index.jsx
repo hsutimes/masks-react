@@ -7,7 +7,7 @@ import {
   Space,
   Popup,
   Toast,
-} from 'antd-mobile-v5';
+} from 'antd-mobile';
 import { MoreOutline } from 'antd-mobile-icons';
 
 import { message } from 'antd';
@@ -126,7 +126,6 @@ const Chat = () => {
             }}
           >
             <List.Item
-              prefix=""
               extra={
                 <>
                   <Space>
