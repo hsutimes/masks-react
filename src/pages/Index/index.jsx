@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { TabBar, ListView } from 'antd-mobile';
-import { message } from 'antd';
+import { AppstoreOutline, UserContactOutline } from 'antd-mobile-icons';
 
 import Home from '@/components/Home';
 import Friends from '@/components/Friends';
@@ -67,33 +67,15 @@ class TabBarExample extends React.Component {
           }
         >
           <TabBar
+            tintColor="#76c6b8"
             unselectedTintColor="#949494"
-            tintColor="#33A3F4"
             barTintColor="white"
             hidden={this.state.hidden}
           >
             <TabBar.Item
-              icon={
-                <div
-                  style={{
-                    width: '22px',
-                    height: '22px',
-                    background:
-                      'url(https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg) center center /  21px 21px no-repeat',
-                  }}
-                />
-              }
-              selectedIcon={
-                <div
-                  style={{
-                    width: '22px',
-                    height: '22px',
-                    background:
-                      'url(https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg) center center /  21px 21px no-repeat',
-                  }}
-                />
-              }
-              title="Home"
+              icon={<AppstoreOutline fontSize={24} />}
+              selectedIcon={<AppstoreOutline fontSize={24} color="#76c6b8" />}
+              title="首页"
               key="Home"
               // badge={2}
               selected={this.state.selectedTab === 'redTab'}
@@ -107,29 +89,13 @@ class TabBarExample extends React.Component {
               <Home user={this.state.user} />
             </TabBar.Item>
             <TabBar.Item
-              icon={
-                <div
-                  style={{
-                    width: '22px',
-                    height: '22px',
-                    background:
-                      'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat',
-                  }}
-                />
-              }
+              icon={<UserContactOutline fontSize={24} />}
               selectedIcon={
-                <div
-                  style={{
-                    width: '22px',
-                    height: '22px',
-                    background:
-                      'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat',
-                  }}
-                />
+                <UserContactOutline fontSize={24} color="#76c6b8" />
               }
-              title="Friend"
+              title="好友"
               key="Friend"
-              dot
+              // dot
               selected={this.state.selectedTab === 'greenTab'}
               onPress={() => {
                 this.setState({

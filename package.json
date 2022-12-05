@@ -26,6 +26,7 @@
     "@wcjiang/notify": "^2.0.12",
     "ahooks": "^3.1.13",
     "antd": "^4.19.2",
+    "antd-mobile-icons": "^0.3.0",
     "antd-mobile-v5": "npm:antd-mobile@^5.6.0",
     "classnames": "^2.3.2",
     "crypto-js": "^4.1.1",
