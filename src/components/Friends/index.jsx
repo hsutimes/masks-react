@@ -1,31 +1,53 @@
 import React from 'react';
 import { Avatar, Button } from 'antd';
-import { Image, List } from 'antd-mobile';
-
+import { NavBar, List, Image } from 'antd-mobile';
+import { List as VirtualizedList, AutoSizer } from 'react-virtualized';
 import { history, useModel } from 'umi';
 
+import styles from './index.less';
+
+const rowHeight = 50; // 单行高度
+const maxRowCount = 10; // 最大行数
+
 const Friends = (props) => {
-  const { conn, nums, peoples } = useModel('useWebSocketModel');
+  const { nums, peoples } = useModel('useWebSocketModel');
+
+  const rowCount = peoples.length;
+  const maxHeight =
+    rowCount <= maxRowCount ? rowCount * rowHeight : maxRowCount * rowHeight;
+
+  function rowRenderer({ index, key, style }) {
+    const item = peoples[index];
+    return (
+      <List.Item
+        key={key}
+        style={style}
+        prefix={
+          <Avatar style={{ background: '#76c6b8' }} shape="circle" size="large">
+            {item.charAt(0).toUpperCase()}
+          </Avatar>
+        }
+      >
+        {item}
+      </List.Item>
+    );
+  }
 
   return (
     <>
       <List header={`在线用户 ${nums} 人`}>
-        {peoples.map((i, k) => (
-          <List.Item
-            key={k}
-            prefix={
-              <Avatar
-                style={{ background: '#76c6b8' }}
-                shape="circle"
-                size="large"
-              >
-                {i.charAt(0).toUpperCase()}
-              </Avatar>
-            }
-          >
-            {i}
-          </List.Item>
-        ))}
+        <AutoSizer disableHeight>
+          {({ width }) => (
+            <VirtualizedList
+              rowCount={rowCount}
+              rowRenderer={rowRenderer}
+              width={width}
+              height={maxHeight}
+              rowHeight={rowHeight}
+              overscanRowCount={10}
+            />
+          )}
+        </AutoSizer>
       </List>
     </>
   );
