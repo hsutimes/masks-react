@@ -1,13 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  NavBar,
-  Input,
-  List,
-  Button,
-  Space,
-  Popup,
-  Toast,
-} from 'antd-mobile';
+import { NavBar, Input, List, Button, Space, Popup, Toast } from 'antd-mobile';
 import { MoreOutline } from 'antd-mobile-icons';
 
 import { message } from 'antd';
@@ -22,6 +14,8 @@ import {
 } from '@ant-design/icons';
 import Message from '@/components/Message';
 import Friends from '@/components/Friends';
+
+import { encryptAes, decryptAes } from '@/utils/util';
 
 import styles from './index.less';
 
@@ -59,7 +53,8 @@ const Chat = () => {
           obj.avatar_color = { background: '#ff8f1f' };
           arr.push(obj);
         }
-        obj.data = msg[1];
+        // obj.data = msg[1];
+        obj.data = decryptAes(msg[1]);
         obj.isMe = msg[0] === a ? true : false;
         obj.user = msg[0];
         obj.root = false;
@@ -75,7 +70,7 @@ const Chat = () => {
       return;
     }
     // console.log(value);
-    sendMsg(value);
+    sendMsg(encryptAes(value));
     setValue('');
   };
 

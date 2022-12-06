@@ -11,7 +11,7 @@ import { history } from 'umi';
 
 import notify from '@/utils/notify';
 
-import { encryption, decryption } from '@/utils/util';
+import { encryption, decryption, encryptAes, decryptAes } from '@/utils/util';
 
 import conf from '@/utils/conf';
 
@@ -39,7 +39,7 @@ const ReadyState = {
  * @returns
  */
 export default function useWebSocketModel() {
-  const [user, setUser] = useCookieState(null);
+  const [user, setUser] = useCookieState('user');
 
   const [host, setHost] = useState('');
 
@@ -93,7 +93,7 @@ export default function useWebSocketModel() {
       // 最多只保留100条消息
       t = t.slice(t.length - 100, t.length);
     }
-    setHistoryMsg(t);
+    // setHistoryMsg(t);
   }, [message]);
 
   // 初始化连接
@@ -157,12 +157,17 @@ export default function useWebSocketModel() {
     } else {
       let t = [...message];
       t.push(msg);
+      console.log(msg);
       setMessage([...t]);
-      // console.log(msg);
       // 全局通知新消息
-      if (history.location.pathname === '/') {
+      if (history.location.pathname !== '/chat') {
         // navigator.vibrate(200);
-        notification.info({ message: msg, duration: 3 });
+        let m = msg.split(': ');
+        notification.info({
+          message: m[0],
+          description: decryptAes(m[1]),
+          duration: 3,
+        });
         // notify.notifyMsg(msg);
       }
     }
