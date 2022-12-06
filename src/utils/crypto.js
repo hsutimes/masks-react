@@ -19,6 +19,6 @@ function decrypt (message) {
   }).toString(CryptoJS.enc.Utf8);
 }
 
-export {
+module.exports = {
   encrypt, decrypt
 }

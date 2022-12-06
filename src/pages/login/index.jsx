@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Input, WhiteSpace, Toast } from 'antd-mobile';
 import { history } from 'umi';
 import Cookies from 'js-cookie';
-import { randomColor } from '@/utils/util.js';
+import { randomColor } from '@/utils/util';
 
 import styles from './index.less';
 

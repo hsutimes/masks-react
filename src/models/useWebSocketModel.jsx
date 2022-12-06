@@ -10,7 +10,8 @@ import { notification } from 'antd';
 import { history } from 'umi';
 
 import notify from '@/utils/notify';
-import { encrypt, decrypt } from '@/utils/crypto';
+
+import { encryption, decryption } from '@/utils/util';
 
 import conf from '@/utils/conf';
 
@@ -114,7 +115,7 @@ export default function useWebSocketModel() {
         clearInterval(t);
       }
       if (ws.readyState == ReadyState.Open) {
-        ws.send(encrypt('ping'));
+        ws.send(encryption('ping'));
       }
     }, 10000);
   };
@@ -130,13 +131,13 @@ export default function useWebSocketModel() {
   const sendMsg = (msg) => {
     if (webSocketIns) {
       // sendMessage(msg); // 执行出现 disconnected 异常
-      webSocketIns.send(encrypt(msg));
+      webSocketIns.send(encryption(msg));
     }
   };
 
   // 接收消息
   const onMessage = (e, ws) => {
-    let msg = decrypt(e.data);
+    let msg = decryption(e.data);
     if (msg.includes('nums')) {
       let l = parseInt(msg.split(': ')[1]);
       setNums(l);
