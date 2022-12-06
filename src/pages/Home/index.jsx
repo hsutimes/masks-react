@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Avatar, Button } from 'antd';
 import { history, useModel } from 'umi';
 import { useUpdateEffect } from 'ahooks';
+import { NavBar, List } from 'antd-mobile';
 
 import styles from './index.less';
 
-const index = (props) => {
+const Home = (props) => {
   const { user, conn, disConnect, nums } = useModel('useWebSocketModel');
 
   useEffect(() => {
@@ -28,33 +29,24 @@ const index = (props) => {
   return (
     <>
       <div className={styles.main}>
+        <NavBar back={null}>首页</NavBar>
         {user && (
-          <Avatar size="large" style={user.avatar_color}>
-            {user.name.charAt(0).toUpperCase()}
-          </Avatar>
+          <div className={styles.user}>
+            <Avatar size="large" style={user.avatar_color}>
+              {user.name.charAt(0).toUpperCase()}
+            </Avatar>
+          </div>
         )}
-        <div>在线人数：{nums}</div>
-        <div
-          style={{
-            padding: 30,
-          }}
-        >
-          <Button type="primary" onClick={enter}>
-            进入
-          </Button>
-        </div>
-        <div
-          style={{
-            padding: 30,
-          }}
-        >
-          <Button type="primary" onClick={offLine}>
-            下线
-          </Button>
-        </div>
+        {/* <div>在线人数：{nums}</div> */}
+
+        <List mode="card" header="频道列表">
+          <List.Item extra={`在线人数：${nums}`} onClick={enter}>
+            洽谈室
+          </List.Item>
+        </List>
       </div>
     </>
   );
 };
 
-export default index;
+export default Home;
