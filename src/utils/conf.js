@@ -1,8 +1,56 @@
-const dev = 'ws://172.16.1.71:8081';
+const dev = 'ws://localhost:8081';
 const prod = 'ws://chat.hsutimes.com:7002';
 
-const host = prod;
+const host = dev;
+const token = 'iUwrKg5cnqTdp45l5mS'
+
+const PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkcc0MxF2/HGrs98mCIfF
+/6sQjcB2zxtqfs/cpnzIeJDApUKOFC5R8RJMcXcki4/8XDCwG8tJQa4BVgPu44Yy
+5+zSYjbQM5y0SRNkBfeH+qQge1ef/mzbCadWwIS1/di+JltaBex/J6zzIxEbZivW
+VRhobfFIEKIQ8oUvrqvjwZ8e9+GC/JGuYsPzTBD5ewUfPTXJZm1Gi6kmQjcUaEM8
+OVisjG/NR3MXFTs7sZxDYpitDMUitcTIqCxKq+BGSDIDu73HtgwNSLNvNAIwl9NE
+Bbdz2qZPwkdz5BGdUefAmNDjyHnKtoyoif15TjjjyU9rx2KQI6plimZIhtLLOq8u
+3wIDAQAB
+-----END PUBLIC KEY-----`
+
+const PRIVATE_KEY = `-----BEGIN RSA PRIVATE KEY-----
+MIIEpQIBAAKCAQEAu40gJWMpGXvLFUC6YDt3hbyxM1IKvK2lcf1DhCf4BRx9MrDO
+04XCj680xbhC4zXrLf5HnlZfDNKiikQFg326a2QauWgJDtsbt0z2VRglrOd1C2BJ
+CK1NHKGnFutDXD3RkXcJ8/kuuktw06zjzaVvqAGoV2qR+mwczY7sIEwuKO9HNQpy
+RBvJlxE7OSilaVJIVaDyY/7lClfd86W+zzmOi+L7Iw071wBBLDE/d23V8y8j2+zM
+Xslv5G053GqSY2LmarPRaxWA4wsaDcwbOyfj8UmYOjnriCU2s4wK+sSjbFjtKhPh
+QXmmCWefqH5fBGpsXm0jOokvRjVJA3arlqcmGwIDAQABAoIBAQCJSkdr1uixFOOW
+jSlhZGab6YK1lKrzbxGbHdAcn7140F/9iVv9jv7be1/gFIAyHrgnlOoMSCGQG2iM
+WjrHBHRARKkja7qlu1LQnW/83o5FwbD2QOd1iJbYDKVpq5JFpaMRHtiUVaYVDUBs
+UzT2xtGzZHM8enCdpiJ3ftXu1pU7tJiz2a8XXUJr7OcODddjP6uiXgH+yvCAsocm
+BOWY3LYBDlOmrwZpzTkqyRAvMGn61c5YyJwOnPQeMjufxzhJayhf8rW4+gb8A/jC
+If0eFSJx9h1GOwmLX7+6PxksyRCfJeO8HMssyVkyqFl8wuET0xzQLMADJ9jNa8Ty
+NHqxYdCBAoGBAPwDJYW71wl14suD4yVB5/Vo2QbTgZkXhxEqlvBS7bC+U0eQGWbj
+aDVC1+isYve0+/N249+Fkmpx4YI9Kp61JWbufZSj8aOIxKUIK0wccATTu6rm+75s
+ptSH8BQ4PQegASjq9qdGWaKhCH4258SLoSZtJVT28ZWGnYHqkZ1JVq7hAoGBAL6E
+3Bp+MSABKut+IgHMCvi4oGipnjmVSZduT01fHcG/EP6QXbqLIkrQm+iZSMiPgPll
+el5rDGxzp2GXZqvR0zvIsgzcOu2TFF4APslgudqS5R1GTmOLnIxxpenpLx2mFFKb
+Nu32nlUdrXR4K9ZMPQiqRLL0KG0I5hyNOj0RxSB7AoGALJFJ43qyrsOgVil+1Cnx
+oZ7nMqPY+YAFrO2BQAMKcgVWqQM82stAtJqboFRMNE5XeFkAN5lhqV12ahfzH5od
+gTSQFOdhZnBbhmwJbC5jSRdAyxqKTsTcRB2+QXUopd6QFfJnqHFyjKY54EhJeKLQ
+3wDSZ1I8qxrhZAZdthkwMUECgYEArCEHZ1w58At+BpPID82U4BCWxNjynl31xj4g
+oevcy65foU83j5GjIusE4YqUCrg0s57uhx26dMWtJWwPlA8YBLyXuSzEhN7MmP0p
+vPGKGSN8ow1hR2jcwLrxRruqGORzGgsn/qlBde9BRqhIGu54ejqzpOcZGyHeHU+v
+nXtPmb8CgYEAmXLOlpUNZ04h6fPLR90bZBmXMtqF7Sl6pXeZTHmQIqsqhVWU0J7g
+2fjqGRZ1czah1hLvzJdG4N8CQctecu+ro2J6pasDCMlJwaEr0goCTyNTFFaJNS8f
+GgonBNwMdxKk9qM8/kqX+N4yM5IX+6NzUYxQGF6SmJRv6N2ZaMNF724=
+-----END RSA PRIVATE KEY-----`
+
+const settings = {
+  isShowNickname: true,
+  isAnonymity: false,
+  publicKey: PUBLIC_KEY,
+  privateKey: PRIVATE_KEY,
+}
 
 export default {
   host,
+  token,
+  settings,
 };

@@ -35,20 +35,25 @@ const Friends = (props) => {
 
   return (
     <>
-      <List header={`在线用户 ${nums} 人`}>
-        <AutoSizer disableHeight>
-          {({ width }) => (
-            <VirtualizedList
-              rowCount={rowCount}
-              rowRenderer={rowRenderer}
-              width={width}
-              height={maxHeight}
-              rowHeight={rowHeight}
-              overscanRowCount={10}
-            />
-          )}
-        </AutoSizer>
-      </List>
+      <div className={styles.main}>
+        <NavBar back={null}>好友</NavBar>
+        <div className={styles.list}>
+          <List header={`在线用户 ${nums} 人`}>
+            <AutoSizer disableHeight>
+              {({ width }) => (
+                <VirtualizedList
+                  rowCount={rowCount}
+                  rowRenderer={rowRenderer}
+                  width={width}
+                  height={maxHeight}
+                  rowHeight={rowHeight}
+                  overscanRowCount={10}
+                />
+              )}
+            </AutoSizer>
+          </List>
+        </div>
+      </div>
     </>
   );
 };

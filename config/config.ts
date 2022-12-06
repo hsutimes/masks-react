@@ -5,9 +5,17 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  history: { type: 'hash' },
+  dynamicImport: {
+    loading: '@ant-design/pro-layout/es/PageLoading',
+  },
+  // history: { type: 'hash' },
   hash: true,
+  antd: { mobile: false },
   routes,
+  theme: {
+    'primary-color': '#76c6b8',
+    'border-radius-base': '4px',
+  },
   // fastRefresh: {},
   mfsu: {},
 });

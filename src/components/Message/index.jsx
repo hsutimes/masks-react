@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Avatar, Button } from 'antd';
+import { Avatar, Button, Image } from 'antd';
 import { scrollToY } from '@/utils/sliding-scroll';
 import { useUpdateEffect } from 'ahooks';
+import classNames from 'classnames';
+import conf from '@/utils/conf';
 import styles from './index.less';
 
 const Message = (props) => {
@@ -46,15 +48,48 @@ const Message = (props) => {
   return (
     <>
       <div id="scroll" className={styles.chat}>
-        <ul>
+        <Image.PreviewGroup>
           {msg.map((i, k) => (
-            <li key={k} className={i.isMe ? styles.me : styles.other}>
-              <Avatar style={i.avatar_color}>{user(i)}</Avatar>
-              <div style={{ margin: '7px 56px 0px' }}>{i.user}</div>
-              <p className={styles.message}>{i.data}</p>
-            </li>
+            <div
+              key={k}
+              className={classNames(
+                styles.item,
+                i.isMe ? styles.me : styles.other,
+              )}
+            >
+              <div className={styles.avatar}>
+                <Avatar style={i.avatar_color} size={38}>
+                  {user(i)}
+                </Avatar>
+              </div>
+              <div className={styles.msg_body}>
+                {conf.settings.isShowNickname && (
+                  <div className={styles.nickname}>
+                    <span>
+                      {conf.settings.isAnonymity ? 'Anonymity' : i.user}
+                    </span>
+                  </div>
+                )}
+                {i.data.includes('img|') ? (
+                  <div className={styles.img}>
+                    <Image
+                      fallback="https://img.zhinianblog.com/img/2979"
+                      src={i.data.split('|')[1]}
+                      style={{ borderRadius: 8 }}
+                      alt=""
+                    />
+                  </div>
+                ) : (
+                  <div className={styles.msg_bg}>
+                    <div className={styles.message}>
+                      <span>{i.data}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           ))}
-        </ul>
+        </Image.PreviewGroup>
       </div>
     </>
   );

@@ -25,7 +25,9 @@ const Test = () => {
       '连接已关闭或者没有链接成功',
     ];
     if (!ws.current || ws.current.readyState === 3) {
-      ws.current = new WebSocket(conf.host);
+      ws.current = new WebSocket(
+        `${conf.host}/chat?token=${conf.token}&name=test`,
+      );
       ws.current.onopen = (_e) =>
         setReadyState(stateArr[ws.current?.readyState ?? 0]);
       ws.current.onclose = (_e) =>

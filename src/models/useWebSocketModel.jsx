@@ -11,6 +11,8 @@ import { history } from 'umi';
 
 import notify from '@/utils/notify';
 
+import { encryption, decryption } from '@/utils/util';
+
 import conf from '@/utils/conf';
 
 const ReadyState = {
@@ -37,7 +39,7 @@ const ReadyState = {
  * @returns
  */
 export default function useWebSocketModel() {
-  const [nickname, setNickname] = useCookieState('account');
+  const [user, setUser] = useCookieState(null);
 
   const [host, setHost] = useState('');
 
@@ -71,7 +73,7 @@ export default function useWebSocketModel() {
       onMessage(e, ws);
     },
     onError: (e, ws) => {
-      notification.error({ message: '连接出错' });
+      // notification.error({ message: '连接出错' });
     },
     onClose: (e, ws) => {
       notification.error({ message: '连接关闭' });
@@ -95,15 +97,13 @@ export default function useWebSocketModel() {
   }, [message]);
 
   // 初始化连接
-  const init = useCallback((name) => {
-    var supportsVibrate = 'vibrate' in navigator;
-    notification.info({ message: 'vibrate: ' + supportsVibrate, duration: 3 });
-    if (name) {
-      setNickname(name);
-      setHost(conf.host + '/chat?token=key&&name=' + name);
-      if (historyMsg) {
-        setMessage(historyMsg);
-      }
+  const init = useCallback((user) => {
+    if (user?.name) {
+      setUser(user);
+      setHost(`${conf.host}/chat?token=${conf.token}&name=${user.name}`);
+      // if (historyMsg) {
+      //   setMessage(historyMsg);
+      // }
     }
   }, []);
 
@@ -115,7 +115,7 @@ export default function useWebSocketModel() {
         clearInterval(t);
       }
       if (ws.readyState == ReadyState.Open) {
-        ws.send('ping');
+        ws.send(encryption('ping'));
       }
     }, 10000);
   };
@@ -131,13 +131,13 @@ export default function useWebSocketModel() {
   const sendMsg = (msg) => {
     if (webSocketIns) {
       // sendMessage(msg); // 执行出现 disconnected 异常
-      webSocketIns.send(msg);
+      webSocketIns.send(encryption(msg));
     }
   };
 
   // 接收消息
   const onMessage = (e, ws) => {
-    let msg = e.data;
+    let msg = decryption(e.data);
     if (msg.includes('nums')) {
       let l = parseInt(msg.split(': ')[1]);
       setNums(l);
@@ -147,6 +147,13 @@ export default function useWebSocketModel() {
       setPeoples(l);
     } else if (msg.includes('entered') || msg.includes('left')) {
       // donothing
+    } else if (msg.includes('history')) {
+      let l = msg.slice('history: '.length, msg.length);
+      if (l) {
+        l = l.split(',');
+        // console.log(l);
+        setMessage(l);
+      }
     } else {
       let t = [...message];
       t.push(msg);
@@ -162,6 +169,7 @@ export default function useWebSocketModel() {
   };
 
   return {
+    user,
     ReadyState,
     conn,
     nums,
