@@ -124,12 +124,12 @@ const Chat = () => {
               extra={
                 <>
                   <Space>
-                    {/* <div className={styles.plus}>
+                    <div className={styles.plus}>
                       <PlusCircleOutlined
                         style={{ fontSize: '35px' }}
                         onClick={plus}
                       />
-                    </div> */}
+                    </div>
                     <Button color="primary" fill="solid" onClick={send}>
                       发送
                     </Button>

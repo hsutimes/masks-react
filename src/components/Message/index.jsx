@@ -70,22 +70,21 @@ const Message = (props) => {
                     </span>
                   </div>
                 )}
-                {/* {i.data.includes('img|') ? (
+                {i.data.includes('img|') ? (
                   <div className={styles.img}>
                     <Image
-                      fallback="https://img.zhinianblog.com/img/2979"
                       src={i.data.split('|')[1]}
                       style={{ borderRadius: 8 }}
                       alt=""
                     />
                   </div>
-                ) : ( */}
+                ) : (
                   <div className={styles.msg_bg}>
                     <div className={styles.message}>
                       <span>{i.data}</span>
                     </div>
                   </div>
-                {/* )} */}
+                )}
               </div>
             </div>
           ))}

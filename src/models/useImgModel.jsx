@@ -18,8 +18,8 @@ export default () => {
 
   const uploadImageSingle = useCallback(async (body, cb) => {
     const r = await uploadImageOne(body);
-    if (r.status_code === 200) {
-      cb(true, r.image.url, r.success.message);
+    if (r.status) {
+      cb(true, r.data.links.url, r.message);
     } else {
       cb(false, [], r.error.message);
     }
@@ -28,9 +28,8 @@ export default () => {
   const uploadImageSingleProgress = useCallback(
     async (body, onProgress, cb) => {
       const r = await uploadImageProgress(body, onProgress);
-      console.log(r);
-      if (r.status_code === 200) {
-        cb(true, r.image.url, r.success.message);
+      if (r.status) {
+        cb(true, r.data.links.url, r.message);
       } else {
         cb(false, [], r.error.message);
       }
