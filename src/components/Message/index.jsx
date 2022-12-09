@@ -74,13 +74,16 @@ const Message = (props) => {
                 i.isMe ? styles.me : styles.other,
               )}
             >
-              <div className={styles.avatar}>
+              <div
+                className={styles.avatar}
+                style={{ opacity: i.isOnlyMsg ? 0 : 1 }}
+              >
                 <Avatar style={i.avatar_color} size={38}>
                   {user(i)}
                 </Avatar>
               </div>
               <div className={styles.msg_body}>
-                {conf.settings.isShowNickname && (
+                {!i.isOnlyMsg && conf.settings.isShowNickname && (
                   <div className={styles.nickname}>
                     <span>
                       {conf.settings.isAnonymity ? 'Anonymity' : i.user}

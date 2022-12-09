@@ -29,7 +29,7 @@ import { encryptAes, decryptAes } from '@/utils/util';
 import styles from './index.less';
 
 const Chat = () => {
-  const { conn, nums, message, sendMsg } = useModel('useWebSocketModel');
+  const { user, conn, nums, message, sendMsg } = useModel('useWebSocketModel');
   const [data, setData] = useState([]);
   const [value, setValue] = useState('');
 
@@ -42,9 +42,7 @@ const Chat = () => {
   });
 
   useEffect(() => {
-    let a = Cookies.get('account');
-    let c = Cookies.get('avatar_color');
-    if (!a || !c || !conn) {
+    if (!user || !conn) {
       history.push('/login');
     } else {
       let arr = [];
@@ -52,23 +50,23 @@ const Chat = () => {
       for (let i = 0; i < message.length; i++) {
         obj = {};
         let msg = message[i].split(': ');
-        if (msg[0] === 'entered' || msg[0] === 'left') {
-          continue;
-          let t = msg[0] === 'entered' ? '欢迎' + msg[1] : msg[1] + '下线';
-          obj.data = t;
-          obj.isMe = false;
-          obj.user = '^o^';
-          obj.root = true;
-          obj.avatar_color = { background: '#ff8f1f' };
-          arr.push(obj);
-        }
         // obj.data = msg[1];
         obj.data = decryptAes(msg[1]);
-        obj.isMe = msg[0] === a ? true : false;
+        obj.isMe = msg[0] === user.name ? true : false;
         obj.user = msg[0];
         obj.root = false;
-        obj.avatar_color = obj.isMe ? JSON.parse(c) : { background: '#00b578' };
+        obj.avatar_color = obj.isMe
+          ? user.avatar_color
+          : { background: '#00b578' };
+        obj.isOnlyMsg = false;
         arr.push(obj);
+      }
+      for (let i = 0; i < arr.length - 1; i++) {
+        let t = arr[i];
+        let t_next = arr[i + 1];
+        if (t.user == t_next.user) {
+          t_next.isOnlyMsg = true;
+        }
       }
       setData(arr);
     }
