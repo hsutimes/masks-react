@@ -23,23 +23,27 @@
       }
       .message {
         position: relative;
-        max-width: 400px;
+        max-width: 320px;
         // min-height: 40px;
         padding: 12px;
-        background: #c8c8c863;
+        // background: #c8c8c863;
+        background: #ffffff63;
         backdrop-filter: blur(5px);
         border-radius: 8px;
-        span {
+        p {
           font-size: 15px;
           line-height: 24px;
           color: #666;
           word-break: break-all;
         }
+        p,
+        pre {
+          margin-bottom: 0px;
+        }
       }
       .img {
-        float: right;
         max-width: 80%;
-        max-height: 300px;
+        // max-height: 300px;
       }
     }
   }
@@ -60,8 +64,11 @@
       }
       .message {
         backdrop-filter: blur(5px);
-        background-color: #76c6b98f;
+        background: #ffffff63;
         border-radius: 8px 2px 8px 8px;
+      }
+      .img {
+        float: right;
       }
     }
   }

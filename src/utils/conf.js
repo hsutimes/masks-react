@@ -1,7 +1,7 @@
 const dev = 'ws://localhost:8081';
 const prod = 'ws://demo.hsutimes.com:13000/ws';
 
-const host = prod;
+const host = dev;
 const token = 'iUwrKg5cnqTdp45l5mS'
 
 const PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----

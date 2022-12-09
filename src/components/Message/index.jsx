@@ -2,9 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { Avatar, Button, Image } from 'antd';
 import { scrollToY } from '@/utils/sliding-scroll';
 import { useUpdateEffect } from 'ahooks';
+import Markdown from 'marked-react';
+import Lowlight from 'react-lowlight';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github.css';
+
 import classNames from 'classnames';
 import conf from '@/utils/conf';
 import styles from './index.less';
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.querySelectorAll('pre code').forEach((el) => {
+    hljs.highlightElement(el);
+  });
+});
+
+const renderer = {
+  code(snippet, lang) {
+    return <Lowlight key={this.elementId} language={lang} value={snippet} />;
+  },
+};
 
 const Message = (props) => {
   // const msg = props.msg;
@@ -70,7 +87,7 @@ const Message = (props) => {
                     </span>
                   </div>
                 )}
-                {i.data.includes('img|') ? (
+                {i.data?.includes('img|') ? (
                   <div className={styles.img}>
                     <Image
                       src={i.data.split('|')[1]}
@@ -81,7 +98,11 @@ const Message = (props) => {
                 ) : (
                   <div className={styles.msg_bg}>
                     <div className={styles.message}>
-                      <span>{i.data}</span>
+                      <Markdown
+                        value={i.data}
+                        renderer={renderer}
+                        breaks={true}
+                      />
                     </div>
                   </div>
                 )}

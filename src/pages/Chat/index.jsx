@@ -1,5 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavBar, Input, List, Button, Space, Popup, Toast } from 'antd-mobile';
+import {
+  NavBar,
+  Input,
+  TextArea,
+  List,
+  Button,
+  Space,
+  Popup,
+  Toast,
+} from 'antd-mobile';
 import { MoreOutline } from 'antd-mobile-icons';
 
 import { message } from 'antd';
@@ -28,7 +37,7 @@ const Chat = () => {
   const [visible2, setVisible2] = useState(false);
 
   // 监听回车事件
-  useKeyPress('enter', (event) => {
+  useKeyPress('ctrl.enter', (event) => {
     send();
   });
 
@@ -77,7 +86,7 @@ const Chat = () => {
   // 发送图片
   const onUploadImg = (e) => {
     setVisible(false);
-    sendMsg('img|' + e);
+    sendMsg(encryptAes('img|' + e));
   };
 
   const handleKeyPress = (event) => {
@@ -137,15 +146,14 @@ const Chat = () => {
                 </>
               }
             >
-              <Input
-                id="msg_input"
-                placeholder="请输入内容"
-                clearable
+              <TextArea
+                placeholder="消息"
                 value={value}
+                maxLength={1000}
+                // showCount
                 onChange={(val) => {
                   setValue(val);
                 }}
-                onKeyPress={handleKeyPress}
               />
             </List.Item>
           </List>
@@ -200,6 +208,13 @@ const PopupContent = (props) => {
 
   const onChange = (e) => {
     const { files } = e.target;
+    if (files?.length == 0) {
+      Toast.show({
+        icon: 'fail',
+        content: `请选择图片`,
+      });
+      return;
+    }
     setFileList(files);
     let file = files[0];
     let body = { file: file };
@@ -217,15 +232,13 @@ const PopupContent = (props) => {
         Toast.show({
           icon: 'success',
           content: '上传成功',
-          duration: 1.5,
         });
-        console.log(d);
+        // console.log(d);
         props.onUploadImg(d);
       } else {
         Toast.show({
           icon: 'fail',
-          content: '上传失败',
-          duration: 1.5,
+          content: `上传失败，${msg}`,
         });
         console.log(msg);
       }

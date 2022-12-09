@@ -21,7 +21,7 @@ export default () => {
     if (r.status) {
       cb(true, r.data.links.url, r.message);
     } else {
-      cb(false, [], r.error.message);
+      cb(false, [], r.message);
     }
   }, []);
 
@@ -31,7 +31,7 @@ export default () => {
       if (r.status) {
         cb(true, r.data.links.url, r.message);
       } else {
-        cb(false, [], r.error.message);
+        cb(false, [], r.message);
       }
     },
     [],
