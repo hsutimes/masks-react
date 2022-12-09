@@ -150,6 +150,7 @@ const Chat = () => {
                 placeholder="消息"
                 value={value}
                 maxLength={1000}
+                autoSize={{ minRows: 2, maxRows: 5 }}
                 // showCount
                 onChange={(val) => {
                   setValue(val);
