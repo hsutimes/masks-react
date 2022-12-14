@@ -62,6 +62,7 @@ export default function useWebSocketModel() {
     reconnectLimit: 10, // 重试次数
     reconnectInterval: 3000, // 重试时间间隔（ms）
     onOpen: (e, ws) => {
+      ws.binaryType = 'arraybuffer';
       // console.log(webSocketIns);
       // 首次发送，注册用户名
       setConn(ws);
@@ -138,6 +139,7 @@ export default function useWebSocketModel() {
   // 接收消息
   const onMessage = (e, ws) => {
     let msg = decryption(e.data);
+    console.log(msg);
     if (msg.includes('nums')) {
       let l = parseInt(msg.split(': ')[1]);
       setNums(l);
@@ -157,7 +159,7 @@ export default function useWebSocketModel() {
     } else {
       let t = [...message];
       t.push(msg);
-      console.log(msg);
+      // console.log(msg);
       setMessage([...t]);
       // 全局通知新消息
       if (history.location.pathname !== '/chat') {

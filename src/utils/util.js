@@ -11,7 +11,7 @@ const randomColor = () => {
   return { background: 'rgb(' + r + ',' + g + ',' + b + ')' };
 };
 
-function randomString(length, chars) {
+function randomString (length, chars) {
   var result = '';
   for (var i = length; i > 0; --i)
     result += chars[Math.floor(Math.random() * chars.length)];
@@ -32,13 +32,39 @@ const randomStr = (l) => {
 
 // 加密
 const encryption = (msg) => {
-  return encrypt(msg);
+  return str2ab(encrypt(msg));
 };
 
 // 解密
 const decryption = (msg) => {
-  return decrypt(msg);
+  return decrypt(ab2str(msg));
 };
+
+/** Convert ArrayBuffer to String */
+function ab2str (input, outputEncoding = 'gbk') {
+  let view = new Uint8Array(input)
+  let t = view.map((i) => {
+    return parseInt(i, 8)
+  })
+  const decoder = new TextDecoder(outputEncoding)
+  return decoder.decode(t)
+}
+
+/** Convert String to ArrayBuffer */
+function str2ab (input) {
+  const view = str2Uint8Array(input)
+  let t = view.map((i) => {
+    return i.toString(8)
+  })
+  return t.buffer
+}
+
+/** Convert String to Uint8Array */
+function str2Uint8Array (input) {
+  const encoder = new TextEncoder()
+  const view = encoder.encode(input)
+  return view
+}
 
 export {
   randomColor,
