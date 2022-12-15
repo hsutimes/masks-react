@@ -1,4 +1,4 @@
-const dev = 'ws://localhost:8081';
+const dev = 'ws://172.16.1.114:8081';
 const prod = 'ws://demo.hsutimes.com:13000/ws';
 
 const host = dev;

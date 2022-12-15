@@ -11,18 +11,15 @@ import {
 } from 'antd-mobile';
 import { MoreOutline } from 'antd-mobile-icons';
 
-import { message } from 'antd';
+import { message, Mentions } from 'antd';
 import { history, useModel } from 'umi';
 import Cookies from 'js-cookie';
 import { useKeyPress } from 'ahooks';
 
-import {
-  PlusCircleOutlined,
-  PictureOutlined,
-  SmileOutlined,
-} from '@ant-design/icons';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import Message from '@/components/Message';
 import Friends from '@/components/Friends';
+import PopupContent from './components/PopupContent';
 
 import { encryptAes, decryptAes } from '@/utils/util';
 
@@ -144,6 +141,23 @@ const Chat = () => {
                 </>
               }
             >
+              {/* <Mentions
+                placeholder="消息"
+                // value={value}
+                maxLength={1000}
+                autoSize={{ minRows: 2, maxRows: 5 }}
+                // showCount
+                onChacnge={(val) => {
+                  console.log(val);
+                  // setValue(val);
+                }}
+                options={[
+                  {
+                    value: 'robot',
+                    label: 'robot',
+                  },
+                ]}
+              /> */}
               <TextArea
                 placeholder="消息"
                 value={value}
@@ -181,103 +195,4 @@ const Chat = () => {
   );
 };
 
-/**
- * 弹出层内容
- * @returns
- */
-const PopupContent = (props) => {
-  const { uploadImageSingle, uploadImageSingleProgress } =
-    useModel('useImgModel');
-
-  const handler = useRef();
-
-  const [fileList, setFileList] = useState([]);
-
-  const onImg = () => {
-    const upload = document.getElementById('upload_file');
-    upload.click();
-  };
-
-  const onEmoji = () => {
-    Toast.show({
-      content: '敬请期待',
-      position: 'top',
-    });
-  };
-
-  const onChange = (e) => {
-    const { files } = e.target;
-    if (files?.length == 0) {
-      Toast.show({
-        icon: 'fail',
-        content: `请选择图片`,
-      });
-      return;
-    }
-    setFileList(files);
-    let file = files[0];
-    let body = { file: file };
-    handler.current = Toast.show({
-      icon: 'loading',
-      content: '上传中…',
-      maskClickable: false,
-      duration: 0,
-    });
-
-    uploadImageSingle(body, (b, d, msg) => {
-      handler.current?.close();
-      handler.current = null;
-      if (b) {
-        Toast.show({
-          icon: 'success',
-          content: '上传成功',
-        });
-        // console.log(d);
-        props.onUploadImg(d);
-      } else {
-        Toast.show({
-          icon: 'fail',
-          content: `上传失败，${msg}`,
-        });
-        console.log(msg);
-      }
-    });
-    setTimeout(() => {
-      if (handler.current) {
-        handler.current?.close();
-        Toast.show({
-          icon: 'fail',
-          content: '上传失败',
-        });
-      }
-    }, 10000);
-  };
-
-  return (
-    <div className={styles.popup}>
-      <Space>
-        <div className={styles.f_img} onClick={onImg}>
-          <div className={styles.icon}>
-            <PictureOutlined style={{ fontSize: '35px' }} />
-          </div>
-          <span>图片</span>
-        </div>
-        <input
-          id="upload_file"
-          style={{ display: 'none' }}
-          type="file"
-          // multiple
-          accept="image/png, image/jpeg"
-          onChange={onChange}
-        ></input>
-        <div className={styles.f_img} onClick={onEmoji}>
-          <div className={styles.icon}>
-            <SmileOutlined style={{ fontSize: '35px' }} />
-          </div>
-          <span>表情</span>
-        </div>
-      </Space>
-    </div>
-  );
-};
 export default Chat;

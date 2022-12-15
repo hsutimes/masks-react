@@ -18,4 +18,11 @@ export default defineConfig({
   },
   // fastRefresh: {},
   mfsu: {},
+  chainWebpack(memo) {
+    memo.module
+      .rule('media')
+      .test(/\.(mp3|wav)$/)
+      .use('file-loader')
+      .loader(require.resolve('file-loader'));
+  },
 });

@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { history, useModel } from 'umi';
-import { NavBar, TabBar } from 'antd-mobile';
+import { NavBar, TabBar, Button } from 'antd-mobile';
+import useSound from 'use-sound';
 
 import { AppstoreOutline, UserContactOutline } from 'antd-mobile-icons';
 
 import Cookies from 'js-cookie';
 
+import di from '@/assets/aud/di.wav';
+import message from '@/assets/aud/message.mp3';
+import jointone from '@/assets/aud/jointone.mp3';
+import leavetone from '@/assets/aud/leavetone.mp3';
+
 import styles from './index.less';
 
 const Bottom = (props) => {
   const { pathname } = props.location;
+  const [play] = useSound(jointone);
 
   const setRouteActive = (value) => {
+    play();
     history.push(value);
   };
 
@@ -38,9 +46,19 @@ const Bottom = (props) => {
 };
 
 const Index = ({ location, children }) => {
-  const { conn, init } = useModel('useWebSocketModel');
+  const { conn, latestMessage, init } = useModel('useWebSocketModel');
 
-  // const [user, setUser] = useState(null);
+  const [voice, setVoice] = useState('');
+
+  useEffect(() => {
+    console.log(latestMessage);
+    setTimeout(() => {
+      setVoice(
+        'https://dds.dui.ai/runtime/v1/synthesize?voiceId=qianranfa&speed=0.8&volume=100&audioType=wav&text=' +
+          latestMessage,
+      );
+    }, 1000);
+  }, [latestMessage]);
 
   useEffect(() => {
     let a = Cookies.get('account');
@@ -67,6 +85,7 @@ const Index = ({ location, children }) => {
       <div className={styles.bottom}>
         <Bottom location={location} />
       </div>
+      <audio autoPlay src={voice}></audio>
     </div>
   );
 };

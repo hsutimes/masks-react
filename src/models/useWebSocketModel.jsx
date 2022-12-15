@@ -47,39 +47,34 @@ export default function useWebSocketModel() {
   const [nums, setNums] = useState(0);
   const [peoples, setPeoples] = useState([]);
   const [message, setMessage] = useState([]);
+  const [latestMessage, setLatestMessage] = useState(null);
 
   const [historyMsg, setHistoryMsg] = useLocalStorageState('msg'); // 缓存历史消息
 
-  const {
-    readyState,
-    sendMessage,
-    latestMessage,
-    disconnect,
-    connect,
-    webSocketIns,
-  } = useWebSocket(host, {
-    manual: true, // 手动启动连接
-    reconnectLimit: 10, // 重试次数
-    reconnectInterval: 3000, // 重试时间间隔（ms）
-    onOpen: (e, ws) => {
-      ws.binaryType = 'arraybuffer';
-      // console.log(webSocketIns);
-      // 首次发送，注册用户名
-      setConn(ws);
-      // sendMsg('大家好，我是' + nickname);
-      notification.success({ message: '连接成功' });
-      ping(ws);
-    },
-    onMessage: (e, ws) => {
-      onMessage(e, ws);
-    },
-    onError: (e, ws) => {
-      // notification.error({ message: '连接出错' });
-    },
-    onClose: (e, ws) => {
-      notification.error({ message: '连接关闭' });
-    },
-  });
+  const { readyState, sendMessage, disconnect, connect, webSocketIns } =
+    useWebSocket(host, {
+      manual: true, // 手动启动连接
+      reconnectLimit: 10, // 重试次数
+      reconnectInterval: 3000, // 重试时间间隔（ms）
+      onOpen: (e, ws) => {
+        ws.binaryType = 'arraybuffer';
+        // console.log(webSocketIns);
+        // 首次发送，注册用户名
+        setConn(ws);
+        // sendMsg('大家好，我是' + nickname);
+        notification.success({ message: '连接成功' });
+        ping(ws);
+      },
+      onMessage: (e, ws) => {
+        onMessage(e, ws);
+      },
+      onError: (e, ws) => {
+        // notification.error({ message: '连接出错' });
+      },
+      onClose: (e, ws) => {
+        notification.error({ message: '连接关闭' });
+      },
+    });
 
   useUpdateEffect(() => {
     // console.log(host);
@@ -139,7 +134,7 @@ export default function useWebSocketModel() {
   // 接收消息
   const onMessage = (e, ws) => {
     let msg = decryption(e.data);
-    console.log(msg);
+    // console.log(msg);
     if (msg.includes('nums')) {
       let l = parseInt(msg.split(': ')[1]);
       setNums(l);
@@ -157,6 +152,7 @@ export default function useWebSocketModel() {
         setMessage(l);
       }
     } else {
+      setLatestMessage(msg);
       let t = [...message];
       t.push(msg);
       // console.log(msg);
