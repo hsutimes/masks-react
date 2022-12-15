@@ -141,15 +141,15 @@ const Chat = () => {
                 </>
               }
             >
-              {/* <Mentions
+              <Mentions
                 placeholder="消息"
-                // value={value}
+                value={value}
                 maxLength={1000}
                 autoSize={{ minRows: 2, maxRows: 5 }}
                 // showCount
-                onChacnge={(val) => {
-                  console.log(val);
-                  // setValue(val);
+                placement={'top'}
+                onChange={(val) => {
+                  setValue(val);
                 }}
                 options={[
                   {
@@ -157,8 +157,8 @@ const Chat = () => {
                     label: 'robot',
                   },
                 ]}
-              /> */}
-              <TextArea
+              />
+              {/* <TextArea
                 placeholder="消息"
                 value={value}
                 maxLength={1000}
@@ -167,7 +167,7 @@ const Chat = () => {
                 onChange={(val) => {
                   setValue(val);
                 }}
-              />
+              /> */}
             </List.Item>
           </List>
         </div>

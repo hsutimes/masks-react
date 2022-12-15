@@ -25,7 +25,7 @@
     "@ant-design/pro-layout": "^6.5.0",
     "@wcjiang/notify": "^2.0.12",
     "ahooks": "^3.1.13",
-    "antd": "^4.19.2",
+    "antd": "^4.24.5",
     "antd-mobile": "^5.26.0",
     "antd-mobile-icons": "^0.3.0",
     "classnames": "^2.3.2",
