@@ -49,15 +49,21 @@ const Index = ({ location, children }) => {
   const { conn, latestMessage, init } = useModel('useWebSocketModel');
 
   const [voice, setVoice] = useState('');
+  const [newMsg, setNewMsg] = useState(latestMessage);
 
   useEffect(() => {
-    console.log(latestMessage);
-    setTimeout(() => {
-      setVoice(
-        'https://dds.dui.ai/runtime/v1/synthesize?voiceId=qianranfa&speed=0.8&volume=100&audioType=wav&text=' +
-          latestMessage,
-      );
-    }, 1000);
+    if (latestMessage != newMsg) {
+      setVoice(null);
+      setTimeout(() => {
+        setVoice(message);
+      }, 10);
+      setTimeout(() => {
+        setVoice(
+          'https://dds.dui.ai/runtime/v1/synthesize?voiceId=qianranfa&speed=0.8&volume=100&audioType=wav&text=' +
+            latestMessage.message,
+        );
+      }, 1000);
+    }
   }, [latestMessage]);
 
   useEffect(() => {

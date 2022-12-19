@@ -152,7 +152,13 @@ export default function useWebSocketModel() {
         setMessage(l);
       }
     } else {
-      setLatestMessage(msg);
+      let m = msg.split(': ');
+      let obj = {
+        datetime: new Date(),
+        user: m[0],
+        message: decryptAes(m[1]),
+      };
+      setLatestMessage(obj);
       let t = [...message];
       t.push(msg);
       // console.log(msg);
@@ -160,10 +166,9 @@ export default function useWebSocketModel() {
       // 全局通知新消息
       if (history.location.pathname !== '/chat') {
         // navigator.vibrate(200);
-        let m = msg.split(': ');
         notification.info({
-          message: m[0],
-          description: decryptAes(m[1]),
+          message: obj.user,
+          description: obj.message,
           duration: 3,
         });
         // notify.notifyMsg(msg);
