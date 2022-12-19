@@ -18,4 +18,6 @@ export default defineConfig({
   },
   // fastRefresh: {},
   mfsu: {},
+  webpack5: {},
+  exportStatic: {},
 });
